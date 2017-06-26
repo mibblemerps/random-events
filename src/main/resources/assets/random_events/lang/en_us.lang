@@ -1,0 +1,34 @@
+# Event announcements
+randomevent.blight=A blight has killed all the crops in the area.
+randomevent.forest_fire=A forest fire has started.
+randomevent.furnace_meltdown=Aaaand your furnace just exploded.
+randomevent.lightning_strike=♫ Can you hear, Can you hear that thunder?! ♫
+randomevent.pink_sheep=A pink sheep spawned nearby. Nice!
+randomevent.visitor=Looks like a visitor has dropped by. Maybe they'll have something useful to trade?
+randomevent.zombie_swarm=Some hungry zombies are dropping by.
+randomevent.tool_break=Your tool falls to pieces within your hands.
+randomevent.acid_rain=An unusual cloud of pollutants has caused acid rain in the area.
+randomevent.acid_rain.ending=The acid rain is ending.
+randomevent.malaria=You feel somewhat sick; nauseous, fever, sweating, shaking chills, etc..
+randomevent.hunt=A pack of hungry wolves are in the area.
+#randomevent.bad_luck=
+randomevent.bad_luck.ore_sabotaged=Huh... it looks like there should've been some %1$s here.
+#randomevent.bad_luck.ending=
+randomevent.tame_wolf=A wolf has passed by and seems to like you.
+randomevent.tank=You hear an intimidating growl from a zombie nearby. He doesn't sound happy.
+randomevent.super_storm=Lightning begins aggressively striking the landscape.
+randomevent.super_storm.ending=The storm clouds appear to be passing...
+randomevent.plague=You've randomly contracted the plague
+randomevent.plague.infected=You've contracted the plague from %1$s
+
+# Items
+item.medical_pack.name=Medical Pack
+
+# Damage sources
+death.attack.acidrain=%1$s dissolved in acidic rain
+death.attack.malaria=%1$s died of malaria
+death.attack.plague=%1$s has succumbed to the plague
+
+# Potions
+effect.randomevents.malaria=Malaria
+effect.randomevents.plague=Plague
