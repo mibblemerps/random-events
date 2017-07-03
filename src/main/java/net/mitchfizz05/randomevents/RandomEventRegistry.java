@@ -2,6 +2,7 @@ package net.mitchfizz05.randomevents;
 
 import net.mitchfizz05.randomevents.eventsystem.component.IComponent;
 import net.mitchfizz05.randomevents.eventsystem.randomevent.RandomEvent;
+import net.mitchfizz05.randomevents.eventsystem.randomevent.RandomEventAcidRain;
 import net.mitchfizz05.randomevents.eventsystem.randomevent.RandomEventBlight;
 
 import java.util.ArrayList;
@@ -73,5 +74,6 @@ public class RandomEventRegistry
     public void registerAllEvents()
     {
         register(new RandomEventBlight());
+        register(new RandomEventAcidRain());
     }
 }

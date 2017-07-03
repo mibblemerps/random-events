@@ -55,7 +55,7 @@ public class RandomEvent
     public IComponent getComponent(Class componentClass)
     {
         for (IComponent component : components) {
-            if (component.getClass() == componentClass) {
+            if (componentClass.isInstance(component)) {
                 return component;
             }
         }

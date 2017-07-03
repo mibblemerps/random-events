@@ -10,6 +10,7 @@ public class RandomEventServices
     public static NbtService nbtService;
     public static AnnouncerService announcerService;
     public static ConfigService configService;
+    public static LongEventService longEventService;
 
 
     // ---
@@ -22,5 +23,6 @@ public class RandomEventServices
         nbtService = new NbtService();
         announcerService = new AnnouncerService();
         configService = new ConfigService(RandomEvents.config);
+        longEventService = new LongEventService();
     }
 }
