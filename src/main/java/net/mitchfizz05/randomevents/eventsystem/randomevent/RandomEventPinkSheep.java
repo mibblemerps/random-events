@@ -6,6 +6,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.world.World;
 import net.mitchfizz05.randomevents.eventsystem.EventDifficulty;
+import net.mitchfizz05.randomevents.eventsystem.ExecuteEventException;
 import net.mitchfizz05.randomevents.eventsystem.component.CDifficulty;
 import net.mitchfizz05.randomevents.eventsystem.component.CPlayerEvent;
 import net.mitchfizz05.randomevents.eventsystem.component.CPlayerTimer;
@@ -25,6 +26,15 @@ public class RandomEventPinkSheep extends RandomEvent implements MobSpawner.IMob
 
         addComponent(new CPlayerTimer(this, TimeHelper.hrsToTicks(0.5f), TimeHelper.hrsToTicks(2)));
         addComponent(new CPlayerEvent());
+    }
+
+    @Override
+    public void execute(World world, EntityPlayer player) throws ExecuteEventException
+    {
+        super.execute(world, player);
+
+        MobSpawner.MobSpawnEventParameters parameters = new MobSpawner.MobSpawnEventParameters(1, 1, 32);
+        MobSpawner.execute(this, parameters, world, player);
     }
 
     @Override
