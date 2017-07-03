@@ -19,10 +19,7 @@ public class RandomEventBlight extends RandomEvent
     {
         super("blight");
 
-        //addComponent(new CWorldTimer(5, 10));
-        //addComponent(new CRandomPlayer());
-
-        addComponent(new CPlayerTimer(5, 10));
+        addComponent(new CPlayerTimer(this, 5, 10));
         addComponent(new CPlayerEvent());
     }
 

@@ -2,21 +2,27 @@ package net.mitchfizz05.randomevents.eventsystem.component;
 
 import io.netty.util.internal.ThreadLocalRandom;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraftforge.common.config.Configuration;
+import net.mitchfizz05.randomevents.eventsystem.IUsesConfig;
 import net.mitchfizz05.randomevents.eventsystem.IUsesNBT;
+import net.mitchfizz05.randomevents.eventsystem.randomevent.RandomEvent;
 
 /**
  * Runs at a regular interval and triggers on the world (not specific to a player).
  */
-public class CWorldTimer implements IComponent, IUsesNBT
+public class CWorldTimer implements IComponent, IUsesNBT, IUsesConfig
 {
+    protected RandomEvent randomEvent;
+
     public int minWaitTime;
     public int maxWaitTime;
 
     public int timeElapsed;
     public int targetTime;
 
-    public CWorldTimer(int minWaitTime, int maxWaitTime)
+    public CWorldTimer(RandomEvent randomEvent, int minWaitTime, int maxWaitTime)
     {
+        this.randomEvent = randomEvent;
         this.minWaitTime = minWaitTime;
         this.maxWaitTime = maxWaitTime;
     }
@@ -44,5 +50,12 @@ public class CWorldTimer implements IComponent, IUsesNBT
     {
         timeElapsed = compound.getInteger("time_elapsed");
         targetTime = compound.getInteger("target_time");
+    }
+
+    @Override
+    public void readConfig(Configuration config)
+    {
+        this.minWaitTime = config.get(randomEvent.getName(), "min_wait_time", minWaitTime).getInt();
+        this.maxWaitTime = config.get(randomEvent.getName(), "max_wait_time", maxWaitTime).getInt();
     }
 }

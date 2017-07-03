@@ -11,6 +11,7 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
+import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.mitchfizz05.randomevents.eventsystem.services.RandomEventServices;
 import net.mitchfizz05.randomevents.proxy.CommonProxy;
@@ -73,11 +74,12 @@ public class RandomEvents
         // Register ourselves on the event bus
         MinecraftForge.EVENT_BUS.register(this);
 
-        // Register events into registry
-        randomEventRegistry.registerAllEvents();
-
         // Init Random Event Services
         RandomEventServices.init();
+
+        // Register events into registry
+        randomEventRegistry.registerAllEvents();
+        MinecraftForge.EVENT_BUS.post(new RandomEventsInitialised(randomEventRegistry));
 
         proxy.init(event);
     }
@@ -104,5 +106,23 @@ public class RandomEvents
     public void onWorldUnload(WorldEvent.Unload event)
     {
         //
+    }
+
+    /**
+     * Triggered once all the Random Events have been initialised.
+     */
+    public class RandomEventsInitialised extends Event
+    {
+        private RandomEventRegistry randomEventRegistry;
+
+        public RandomEventsInitialised(RandomEventRegistry randomEventRegistry)
+        {
+            this.randomEventRegistry = randomEventRegistry;
+        }
+
+        public RandomEventRegistry getRandomEventRegistry()
+        {
+            return randomEventRegistry;
+        }
     }
 }
