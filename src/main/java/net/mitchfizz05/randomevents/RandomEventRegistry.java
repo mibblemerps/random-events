@@ -83,5 +83,6 @@ public class RandomEventRegistry
         register(new RandomEventSuperStorm());
         register(new RandomEventTameWolf());
         register(new RandomEventTank());
+        register(new RandomEventToolBreak());
     }
 }
