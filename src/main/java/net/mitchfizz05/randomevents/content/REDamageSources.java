@@ -10,4 +10,8 @@ public class REDamageSources
     public static DamageSource acidRain = new DamageSource("acidrain")
             .setDamageBypassesArmor()
             .setDamageIsAbsolute();
+
+    public static DamageSource plague = new DamageSource("plague")
+            .setDamageBypassesArmor()
+            .setDamageIsAbsolute();
 }
