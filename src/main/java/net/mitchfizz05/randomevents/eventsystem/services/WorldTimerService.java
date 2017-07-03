@@ -24,7 +24,7 @@ public class WorldTimerService
     @SubscribeEvent
     public void onWorldTick(TickEvent.WorldTickEvent event)
     {
-        if (!WorldHelper.isWorldLoaded() || !WorldHelper.isOverworld(event.world) || !event.world.isRemote)
+        if (!WorldHelper.isWorldLoaded() || !WorldHelper.isOverworld(event.world) || event.world.isRemote)
             return;
 
         // Only execute on 1 phase (otherwise this will execute twice per tick)
