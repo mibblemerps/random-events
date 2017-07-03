@@ -13,12 +13,10 @@ import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 import net.mitchfizz05.randomevents.eventsystem.ExecuteEventException;
-import net.mitchfizz05.randomevents.eventsystem.component.CAnnounceable;
-import net.mitchfizz05.randomevents.eventsystem.component.CDifficulty;
-import net.mitchfizz05.randomevents.eventsystem.component.CPlayerTimer;
-import net.mitchfizz05.randomevents.eventsystem.component.CWorldTimer;
+import net.mitchfizz05.randomevents.eventsystem.component.*;
 import net.mitchfizz05.randomevents.eventsystem.randomevent.RandomEvent;
 import net.mitchfizz05.randomevents.eventsystem.services.RandomEventServices;
+import net.mitchfizz05.randomevents.util.DurationFormatHelper;
 
 import javax.annotation.Nullable;
 import java.util.*;
@@ -141,6 +139,21 @@ public class CommandRandomEvents implements ICommand
         // Is enabled?
         if (!event.isEnabled())
             infoMsg.appendSibling(new TextComponentString("Disabled!\n").setStyle(new Style().setColor(TextFormatting.RED)));
+
+        // Is currently active?
+        CLongEvent longEventComponent = (CLongEvent) event.getComponent(CLongEvent.class);
+        if (longEventComponent != null && longEventComponent.isActive()) {
+            infoMsg.appendSibling(new TextComponentString("Currently active!\n").setStyle(new Style().setColor(TextFormatting.GREEN)));
+
+            // How long till the event ends?
+            CLongTimedEvent longTimedEventComponent = (CLongTimedEvent) event.getComponent(CLongTimedEvent.class);
+            if (longTimedEventComponent != null) {
+                ITextComponent msg = new TextComponentString("Ends in: ").setStyle(keyStyle);
+                msg.appendSibling(new TextComponentString(DurationFormatHelper.formatSeconds(longTimedEventComponent.timeLeft) + "\n").setStyle(valueStyle));
+
+                infoMsg.appendSibling(msg);
+            }
+        }
 
         // Announcement
         CAnnounceable announceableComponent = (CAnnounceable) event.getComponent(CAnnounceable.class);
