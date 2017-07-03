@@ -85,5 +85,6 @@ public class RandomEventRegistry
         register(new RandomEventTank());
         register(new RandomEventToolBreak());
         register(new RandomEventVisitor());
+        register(new RandomEventZombieSwarm());
     }
 }
