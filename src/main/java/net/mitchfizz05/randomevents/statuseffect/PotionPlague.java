@@ -19,7 +19,7 @@ import java.util.List;
 /**
  * Potion that will slowly reveal symptoms and eventually kill it's host, and worst of all, is highly contagious.
  */
-public class PotionPlague extends Potion
+public class PotionPlague extends Potion implements ITreatableWithMedicine
 {
     /**
      * Base distance the potion can spread.
@@ -168,5 +168,11 @@ public class PotionPlague extends Potion
                 canidate.sendMessage(new TextComponentTranslation("randomevent.plague.infected", entity.getName()));
             }
         }
+    }
+
+    @Override
+    public float getTreatChance()
+    {
+        return 0.9f;
     }
 }

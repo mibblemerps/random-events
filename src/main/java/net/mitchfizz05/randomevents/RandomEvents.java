@@ -14,6 +14,7 @@ import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.mitchfizz05.randomevents.eventsystem.services.RandomEventServices;
+import net.mitchfizz05.randomevents.item.ModItems;
 import net.mitchfizz05.randomevents.proxy.CommonProxy;
 import net.mitchfizz05.randomevents.statuseffect.REStatusEffects;
 import net.mitchfizz05.randomevents.util.WorldHelper;
@@ -60,6 +61,9 @@ public class RandomEvents
     {
         // Initialise configuration file
         config = new Configuration(event.getSuggestedConfigurationFile());
+
+        // Initialise mod items
+        ModItems.preInit();
 
         // Initialise WorldHelper
         WorldHelper.init();

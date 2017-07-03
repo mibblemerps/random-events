@@ -23,6 +23,8 @@ randomevent.plague.infected=You've contracted the plague from %1$s
 
 # Items
 item.medical_pack.name=Medical Pack
+item.medical_pack.treat.success=Successfully treated %1$s!
+item.medical_pack.treat.failure=Failed to treat %1$s!
 
 # Damage sources
 death.attack.acidrain=%1$s dissolved in acidic rain

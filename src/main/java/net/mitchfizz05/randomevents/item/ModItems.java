@@ -3,23 +3,23 @@ package net.mitchfizz05.randomevents.item;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.mitchfizz05.randomevents.RandomEvents;
 
 public class ModItems
 {
-    // items..
+    public static ItemMedicalPack medicalPack;
 
     public static void preInit()
     {
-        // initialise items..
+        medicalPack = new ItemMedicalPack();
 
         registerItems();
     }
 
     public static void registerItems()
     {
-        // register items..
-        // GameRegistry.register();
+        GameRegistry.register(medicalPack);
     }
 
     public static void registerRenders()
@@ -27,7 +27,7 @@ public class ModItems
         RandomEvents.logger.info("Registering RandomEvents item renders...");
 
         // register renderers..
-        //registerRender();
+        registerRender(medicalPack);
     }
 
     public static void registerRender(Item item)

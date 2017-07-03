@@ -13,7 +13,7 @@ import net.mitchfizz05.randomevents.RandomEvents;
  *
  * TODO: add icon
  */
-public class PotionMalaria extends Potion
+public class PotionMalaria extends Potion implements ITreatableWithMedicine
 {
     AttributeModifier slownessAttributeModifier = new AttributeModifier("malaria_slowness", -0.20D, 2);
 
@@ -68,5 +68,11 @@ public class PotionMalaria extends Potion
     public boolean isReady(int duration, int amplifier)
     {
         return true;
+    }
+
+    @Override
+    public float getTreatChance()
+    {
+        return 0.75f;
     }
 }
