@@ -1,10 +1,7 @@
 package net.mitchfizz05.randomevents;
 
 import net.mitchfizz05.randomevents.eventsystem.component.IComponent;
-import net.mitchfizz05.randomevents.eventsystem.randomevent.RandomEvent;
-import net.mitchfizz05.randomevents.eventsystem.randomevent.RandomEventAcidRain;
-import net.mitchfizz05.randomevents.eventsystem.randomevent.RandomEventBlight;
-import net.mitchfizz05.randomevents.eventsystem.randomevent.RandomEventForestFire;
+import net.mitchfizz05.randomevents.eventsystem.randomevent.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -77,5 +74,7 @@ public class RandomEventRegistry
         register(new RandomEventBlight());
         register(new RandomEventAcidRain());
         register(new RandomEventForestFire());
+        register(new RandomEventFurnaceFire());
+        register(new RandomEventFurnaceMeltdown());
     }
 }
