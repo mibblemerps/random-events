@@ -13,6 +13,10 @@ import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 import net.mitchfizz05.randomevents.eventsystem.ExecuteEventException;
+import net.mitchfizz05.randomevents.eventsystem.component.CAnnounceable;
+import net.mitchfizz05.randomevents.eventsystem.component.CDifficulty;
+import net.mitchfizz05.randomevents.eventsystem.component.CPlayerTimer;
+import net.mitchfizz05.randomevents.eventsystem.component.CWorldTimer;
 import net.mitchfizz05.randomevents.eventsystem.randomevent.RandomEvent;
 import net.mitchfizz05.randomevents.eventsystem.services.RandomEventServices;
 
@@ -123,22 +127,59 @@ public class CommandRandomEvents implements ICommand
 
         String eventName = args[1];
 
-        // Get randomevent
+        // Get Random Event
         RandomEvent event = getEventByName(eventName);
 
-        // Get randomevent info
-        ITextComponent infoMsg = new TextComponentString("");
-        infoMsg.appendSibling(new TextComponentString(event.getName() + "\n").setStyle(new Style().setBold(true)));
+        // Styles
+        Style keyStyle = new Style().setColor(TextFormatting.YELLOW);
+        Style valueStyle = new Style().setColor(TextFormatting.GRAY);
 
-        // todo: reimplement
-//        if (!randomevent.enabled)
-//            infoMsg.appendSibling(new TextComponentString("Disabled!\n").setStyle(new Style().setColor(TextFormatting.RED)));
+        // Construct info
+        ITextComponent infoMsg = new TextComponentString("\n");
+        infoMsg.appendSibling(new TextComponentString(event.getName() + "\n").setStyle(new Style().setColor(TextFormatting.DARK_AQUA).setBold(true)));
 
-        // Difficulty
-//        TextComponentString difficultyMsg = new TextComponentString("Difficulty: ");
-//        difficultyMsg.appendSibling(new TextComponentString(randomevent.difficulty + "\n")
-//                .setStyle(new Style().setColor(randomevent.difficulty.colour)));
-//        infoMsg.appendSibling(difficultyMsg);
+        // Is enabled?
+        if (!event.isEnabled())
+            infoMsg.appendSibling(new TextComponentString("Disabled!\n").setStyle(new Style().setColor(TextFormatting.RED)));
+
+        // Announcement
+        CAnnounceable announceableComponent = (CAnnounceable) event.getComponent(CAnnounceable.class);
+        if (announceableComponent != null) {
+            ITextComponent msg = new TextComponentString("Announcement: ").setStyle(keyStyle);
+            msg.appendSibling(new TextComponentString(announceableComponent.getLocalisedAnnouncement() + "\n").setStyle(valueStyle));
+
+            infoMsg.appendSibling(msg);
+        }
+
+        // Event Difficulty
+        CDifficulty difficultyComponent = (CDifficulty) event.getComponent(CDifficulty.class);
+        if (difficultyComponent != null) {
+            ITextComponent msg = new TextComponentString("Difficulty: ").setStyle(keyStyle);
+            msg.appendSibling(new TextComponentString(difficultyComponent.difficulty.toString() + "\n")
+                    .setStyle(new Style().setColor(difficultyComponent.difficulty.getColor())));
+
+            infoMsg.appendSibling(msg);
+        }
+
+        // World min/max wait time
+        CWorldTimer worldTimerComponent = (CWorldTimer) event.getComponent(CWorldTimer.class);
+        if (worldTimerComponent != null) {
+            ITextComponent msg = new TextComponentString("Global Timer. Trigger time: ").setStyle(keyStyle);
+            msg.appendSibling(new TextComponentString(worldTimerComponent.minWaitTime + "-" + worldTimerComponent.maxWaitTime + " seconds\n")
+                    .setStyle(valueStyle));
+
+            infoMsg.appendSibling(msg);
+        }
+
+        // Player min/max wait time
+        CPlayerTimer playerTimerComponent = (CPlayerTimer) event.getComponent(CPlayerTimer.class);
+        if (playerTimerComponent != null) {
+            ITextComponent msg = new TextComponentString("(Player Timer) Trigger time: ").setStyle(keyStyle);
+            msg.appendSibling(new TextComponentString(playerTimerComponent.minWaitTime + "-" + playerTimerComponent.maxWaitTime + " seconds\n")
+                    .setStyle(valueStyle));
+
+            infoMsg.appendSibling(msg);
+        }
 
         sender.sendMessage(infoMsg);
     }
