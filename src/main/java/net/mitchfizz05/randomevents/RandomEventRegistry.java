@@ -78,5 +78,6 @@ public class RandomEventRegistry
         register(new RandomEventFurnaceMeltdown());
         register(new RandomEventHunt());
         register(new RandomEventLightningStrike());
+        register(new RandomEventPinkSheep());
     }
 }
