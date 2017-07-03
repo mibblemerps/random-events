@@ -47,7 +47,7 @@ public class AnnouncerService
 
         // Construct message
         announcement.appendSibling(new TextComponentString("[Event] ").setStyle(new Style().setColor(TextFormatting.DARK_AQUA).setBold(true)));
-        announcement.appendSibling(new TextComponentTranslation("randomevent.blight").setStyle(eventTextStyle));
+        announcement.appendSibling(new TextComponentTranslation(announceable.translationKey).setStyle(eventTextStyle));
 
         return announcement;
     }
