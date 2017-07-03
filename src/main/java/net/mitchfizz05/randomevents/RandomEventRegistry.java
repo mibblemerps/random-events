@@ -86,5 +86,7 @@ public class RandomEventRegistry
         register(new RandomEventToolBreak());
         register(new RandomEventVisitor());
         register(new RandomEventZombieSwarm());
+        register(new RandomEventPlague());
+        register(new RandomEventMalaria());
     }
 }

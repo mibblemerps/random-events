@@ -15,6 +15,7 @@ import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.mitchfizz05.randomevents.eventsystem.services.RandomEventServices;
 import net.mitchfizz05.randomevents.proxy.CommonProxy;
+import net.mitchfizz05.randomevents.statuseffect.REStatusEffects;
 import net.mitchfizz05.randomevents.util.WorldHelper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -76,6 +77,9 @@ public class RandomEvents
 
         // Init Random Event Services
         RandomEventServices.init();
+
+        // Register game content
+        REStatusEffects.register();
 
         // Register events into registry
         randomEventRegistry.registerAllEvents();
