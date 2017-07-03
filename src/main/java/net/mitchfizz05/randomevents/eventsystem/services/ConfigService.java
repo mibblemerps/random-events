@@ -25,12 +25,18 @@ public class ConfigService
     @SubscribeEvent
     public void onRandomEventsInitialised(RandomEvents.RandomEventsInitialised event)
     {
-        // Loop through all events and their components and load their config if needed.
+        // Loop through all events
         for (RandomEvent randomEvent : event.getRandomEventRegistry().randomEvents) {
+            // Check if this event has been disabled in config
+            if (!config.get(randomEvent.getName(), "enabled", true).getBoolean()) {
+                // Event disabled
+                randomEvent.disable();
+                continue;
+            }
+
             for (IComponent component : randomEvent.getComponents()) {
                 if (component instanceof IUsesConfig) {
                     ((IUsesConfig) component).readConfig(config);
-                    RandomEvents.logger.info("Loaded config for " + randomEvent.toString() + "/" + component.toString());
                 }
             }
         }

@@ -112,6 +112,26 @@ public class RandomEvent
         components.add(component);
     }
 
+    /**
+     * Disable this event.
+     * Once an event has been disabled, it cannot be re-enabled until a game restart.
+     */
+    public void disable()
+    {
+        // Remove all current components. Removing all components will mean no services will act upon the event, making
+        // the event essentially dead.
+        components.clear();
+    }
+
+    /**
+     * Is this event enabled?
+     */
+    public boolean isEnabled()
+    {
+        // If there are no components, this event is essentially useless as no services will act upon it.
+        return components.size() > 0;
+    }
+
     // ---
 
     /**

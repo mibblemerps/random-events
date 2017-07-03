@@ -23,6 +23,10 @@ public class ExecuteEventService
 {
     public void executeEvent(@Nonnull RandomEvent randomEvent, @Nonnull World world, @Nullable EntityPlayer player) throws ExecuteEventException
     {
+        if (!randomEvent.isEnabled()) {
+            throw new ExecuteEventException("Event disabled", randomEvent);
+        }
+
         if (randomEvent.hasComponent(CRandomPlayer.class)) {
             player = getRandomPlayer(randomEvent, world.getMinecraftServer());
         }
