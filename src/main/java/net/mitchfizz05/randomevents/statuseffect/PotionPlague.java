@@ -12,6 +12,7 @@ import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
 import net.mitchfizz05.randomevents.RandomEvents;
 import net.mitchfizz05.randomevents.content.REDamageSources;
+import net.mitchfizz05.randomevents.util.TimeHelper;
 
 import java.util.List;
 
@@ -39,7 +40,7 @@ public class PotionPlague extends Potion
      * Default {@link PotionEffect} duration of the plague. This is the duration that will be applied to other entities
      * that are infected by it.
      */
-    public int defaultDuration = 14400; // 12 minutes
+    public int defaultDuration = TimeHelper.minsToTicks(12); // 12 minutes
 
     protected float contagiousDistance;
 
@@ -135,6 +136,10 @@ public class PotionPlague extends Potion
             // Can't spread to self
             if (canidate == entity)
                 continue;
+
+            // Already infected.
+            if (canidate.isPotionActive(this))
+                continue;;
 
             // Chance of infection is linear to distance away.
             float distance = entity.getDistanceToEntity(canidate);
