@@ -6,9 +6,8 @@ import net.minecraft.world.World;
 import net.mitchfizz05.randomevents.eventsystem.ExecuteEventException;
 import net.mitchfizz05.randomevents.eventsystem.component.CPlayerEvent;
 import net.mitchfizz05.randomevents.eventsystem.component.CPlayerTimer;
-import net.mitchfizz05.randomevents.eventsystem.component.CRandomPlayer;
-import net.mitchfizz05.randomevents.eventsystem.component.CWorldTimer;
 import net.mitchfizz05.randomevents.util.CoordinateHelper;
+import net.mitchfizz05.randomevents.util.TimeHelper;
 
 /**
  * Blight - Destroys all the crops in the area.
@@ -19,7 +18,7 @@ public class RandomEventBlight extends RandomEvent
     {
         super("blight");
 
-        addComponent(new CPlayerTimer(this, 5, 10));
+        addComponent(new CPlayerTimer(this, TimeHelper.hrsToTicks(1), TimeHelper.hrsToTicks(2)));
         addComponent(new CPlayerEvent());
     }
 

@@ -1,6 +1,6 @@
 package net.mitchfizz05.randomevents.util;
 
-public class DurationFormatHelper
+public class TimeHelper
 {
     private static String padNumber(int number)
     {
@@ -14,6 +14,12 @@ public class DurationFormatHelper
         return str;
     }
 
+    /**
+     * Format a number of seconds into a human-friendly form, formatted as a duration with appropriate units.
+     *
+     * @param seconds Seconds
+     * @return Human-friendly duration
+     */
     public static String formatSeconds(int seconds)
     {
         int minutes = (int) Math.floor(seconds / 60);
@@ -26,5 +32,41 @@ public class DurationFormatHelper
         } else {
             return String.format("%s %s", seconds, (seconds == 1) ? "second" : "seconds");
         }
+    }
+
+    /**
+     * Convert seconds to ticks.
+     * (1 second = 20 ticks)
+     *
+     * Will be rounded <b>up</b> to the nearest tick.
+     *
+     * @param seconds Seconds
+     * @return Ticks
+     */
+    public static int secsToTicks(float seconds)
+    {
+        return (int) Math.ceil(seconds * 20);
+    }
+
+    /**
+     * Convert minutes to ticks.
+     *
+     * @param minutes Minutes
+     * @return Ticks
+     */
+    public static int minsToTicks(float minutes)
+    {
+        return secsToTicks(minutes * 60);
+    }
+
+    /**
+     * Convert hours to ticks.
+     *
+     * @param hours Hours
+     * @return Ticks
+     */
+    public static int hrsToTicks(float hours)
+    {
+        return minsToTicks(hours * 60);
     }
 }

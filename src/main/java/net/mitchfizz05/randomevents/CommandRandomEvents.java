@@ -16,7 +16,7 @@ import net.mitchfizz05.randomevents.eventsystem.ExecuteEventException;
 import net.mitchfizz05.randomevents.eventsystem.component.*;
 import net.mitchfizz05.randomevents.eventsystem.randomevent.RandomEvent;
 import net.mitchfizz05.randomevents.eventsystem.services.RandomEventServices;
-import net.mitchfizz05.randomevents.util.DurationFormatHelper;
+import net.mitchfizz05.randomevents.util.TimeHelper;
 
 import javax.annotation.Nullable;
 import java.util.*;
@@ -149,7 +149,7 @@ public class CommandRandomEvents implements ICommand
             CLongTimedEvent longTimedEventComponent = (CLongTimedEvent) event.getComponent(CLongTimedEvent.class);
             if (longTimedEventComponent != null) {
                 ITextComponent msg = new TextComponentString("Ends in: ").setStyle(keyStyle);
-                msg.appendSibling(new TextComponentString(DurationFormatHelper.formatSeconds(longTimedEventComponent.timeLeft) + "\n").setStyle(valueStyle));
+                msg.appendSibling(new TextComponentString(TimeHelper.formatSeconds(longTimedEventComponent.timeLeft) + "\n").setStyle(valueStyle));
 
                 infoMsg.appendSibling(msg);
             }

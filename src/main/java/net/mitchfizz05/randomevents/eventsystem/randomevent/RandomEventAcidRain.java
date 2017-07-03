@@ -14,6 +14,7 @@ import net.mitchfizz05.randomevents.eventsystem.ExecuteEventException;
 import net.mitchfizz05.randomevents.eventsystem.IEventTick;
 import net.mitchfizz05.randomevents.eventsystem.component.CLongTimedEvent;
 import net.mitchfizz05.randomevents.eventsystem.component.CWorldTimer;
+import net.mitchfizz05.randomevents.util.TimeHelper;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -32,7 +33,7 @@ public class RandomEventAcidRain extends RandomEvent implements IEventTick
     {
         super("acid_rain");
 
-        addComponent(new CWorldTimer(this, 600, 1200));
+        addComponent(new CWorldTimer(this, TimeHelper.hrsToTicks(1), TimeHelper.hrsToTicks(2)));
         addComponent(new CLongTimedEvent());
     }
 
