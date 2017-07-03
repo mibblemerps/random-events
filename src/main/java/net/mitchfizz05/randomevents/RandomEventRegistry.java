@@ -76,5 +76,6 @@ public class RandomEventRegistry
         register(new RandomEventForestFire());
         register(new RandomEventFurnaceFire());
         register(new RandomEventFurnaceMeltdown());
+        register(new RandomEventHunt());
     }
 }
