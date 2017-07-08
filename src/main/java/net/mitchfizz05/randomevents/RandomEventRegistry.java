@@ -88,5 +88,6 @@ public class RandomEventRegistry
         register(new RandomEventZombieSwarm());
         register(new RandomEventPlague());
         register(new RandomEventMalaria());
+        register(new RandomEventFoodRot());
     }
 }
