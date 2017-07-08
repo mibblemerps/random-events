@@ -301,6 +301,17 @@ public class CoordinateHelper
         return true;
     }
 
+    /**
+     * Clone a {@link BlockPos}.
+     *
+     * @param pos Source {@link BlockPos}
+     * @return Cloned {@link BlockPos}
+     */
+    public static BlockPos cloneBlockPos(BlockPos pos)
+    {
+        return new BlockPos(pos.getX(), pos.getY(), pos.getZ());
+    }
+
     ///
 
     /**

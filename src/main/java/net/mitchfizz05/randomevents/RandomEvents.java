@@ -102,6 +102,7 @@ public class RandomEvents
     public void serverLoad(FMLServerStartingEvent event)
     {
         event.registerServerCommand(new CommandRandomEvents());
+        event.registerServerCommand(new CommandRoomHelper());
     }
 
     @SubscribeEvent
