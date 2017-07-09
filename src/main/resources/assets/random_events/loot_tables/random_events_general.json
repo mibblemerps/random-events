@@ -1,0 +1,46 @@
+{
+  "pools": [
+    {
+      "name": "random_events_general",
+      "rolls": 1,
+      "entries": [
+
+        {
+          "type": "item",
+          "name": "random_events:medical_pack",
+          "weight": 25,
+          "functions": [
+            {
+              "function": "set_count",
+              "count": {
+                "min": 1,
+                "max": 3
+              }
+            }
+          ]
+        },
+
+        {
+          "type": "item",
+          "name": "random_events:mysterious_berry",
+          "weight": 40,
+          "functions": [
+            {
+              "function": "set_count",
+              "count": {
+                "min": 1,
+                "max": 4
+              }
+            }
+          ]
+        },
+
+        {
+          "type": "empty",
+          "weight": 35
+        }
+
+      ]
+    }
+  ]
+}

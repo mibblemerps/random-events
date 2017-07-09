@@ -13,6 +13,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.mitchfizz05.randomevents.content.RELootTables;
 import net.mitchfizz05.randomevents.eventsystem.services.RandomEventServices;
 import net.mitchfizz05.randomevents.item.ModItems;
 import net.mitchfizz05.randomevents.proxy.CommonProxy;
@@ -47,6 +48,8 @@ public class RandomEvents
      * Event registry
      */
     public static final RandomEventRegistry randomEventRegistry = new RandomEventRegistry();
+
+    public static RELootTables lootTables;
 
     /**
      * Keeps track of whether the world has loaded yet.
@@ -84,6 +87,7 @@ public class RandomEvents
 
         // Register game content
         REStatusEffects.register();
+        lootTables = new RELootTables();
 
         // Register events into registry
         randomEventRegistry.registerAllEvents();
