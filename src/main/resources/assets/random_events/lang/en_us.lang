@@ -22,10 +22,26 @@ randomevent.plague=You've randomly contracted the plague
 randomevent.plague.infected=You've contracted the plague from %1$s
 randomevent.food_rot=Much of your food has rotted away
 
-# Items
+# Medical Pack
 item.medical_pack.name=Medical Pack
-item.medical_pack.treat.success=Successfully treated %1$s!
-item.medical_pack.treat.failure=Failed to treat %1$s!
+
+# Medicine
+medicine.treat.success=Successfully treated %1$s!
+medicine.treat.failure=Failed to treat %1$s!
+medicine.treat.nothing=Nothing to treat
+
+# Mysterious Berry
+item.mysterious_berry.name=Mysterious Berry
+item.mysterious_berry.tooltip=...it looks like a berry?
+item.mysterious_berry.undiscovered=Undiscovered
+item.mysterious_berry.effect=Effect: %1$s
+
+item.mysterious_berry.DUD=Dud
+item.mysterious_berry.MALARIA=Malaria
+item.mysterious_berry.PLAGUE=Plague
+item.mysterious_berry.REGENERATION=Regeneration
+item.mysterious_berry.MEDICINE=Medical
+
 
 # Damage sources
 death.attack.acidrain=%1$s dissolved in acidic rain

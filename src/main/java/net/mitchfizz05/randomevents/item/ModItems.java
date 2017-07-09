@@ -9,10 +9,12 @@ import net.mitchfizz05.randomevents.RandomEvents;
 public class ModItems
 {
     public static ItemMedicalPack medicalPack;
+    public static ItemMysteriousBerry mysteriousBerry;
 
     public static void preInit()
     {
         medicalPack = new ItemMedicalPack();
+        mysteriousBerry = new ItemMysteriousBerry();
 
         registerItems();
     }
@@ -20,6 +22,7 @@ public class ModItems
     public static void registerItems()
     {
         GameRegistry.register(medicalPack);
+        GameRegistry.register(mysteriousBerry);
     }
 
     public static void registerRenders()
@@ -28,6 +31,7 @@ public class ModItems
 
         // register renderers..
         registerRender(medicalPack);
+        registerRender(mysteriousBerry);
     }
 
     public static void registerRender(Item item)

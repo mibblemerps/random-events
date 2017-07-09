@@ -11,9 +11,13 @@ public class ItemBase extends Item
     public ItemBase(String name)
     {
         this.name = name;
-        setUnlocalizedName(name);
-        setRegistryName(RandomEvents.MOD_ID, name);
+        init(this, name);
+    }
 
-        setCreativeTab(CreativeTabs.MISC);
+    public static void init(Item item, String name)
+    {
+        item.setUnlocalizedName(name);
+        item.setRegistryName(RandomEvents.MOD_ID, name);
+        item.setCreativeTab(CreativeTabs.MISC);
     }
 }

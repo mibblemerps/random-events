@@ -1,6 +1,7 @@
 package net.mitchfizz05.randomevents.item;
 
 import io.netty.util.internal.ThreadLocalRandom;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
@@ -12,6 +13,7 @@ import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.mitchfizz05.randomevents.statuseffect.ITreatableWithMedicine;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -33,8 +35,32 @@ public class ItemMedicalPack extends ItemBase
         if (worldIn.isRemote)
             return new ActionResult<ItemStack>(EnumActionResult.PASS, itemStack);
 
+        TreatResult treatResult = treat(player, 1);
+
+        if (treatResult.treatmentSuccessful && treatResult.wasTreatmentAttempted) {
+            itemStack.shrink(1);
+            player.sendMessage(new TextComponentTranslation("medicine.treat.success", treatResult.effect.getName()));
+            return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, itemStack);
+        } else if (treatResult.wasTreatmentAttempted) {
+            player.sendMessage(new TextComponentTranslation("medicine.treat.failure", treatResult.effect.getName()));
+            return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, itemStack);
+        } else {
+            player.sendMessage(new TextComponentTranslation("medicine.treat.nothing"));
+            return new ActionResult<ItemStack>(EnumActionResult.FAIL, itemStack);
+        }
+    }
+
+    /**
+     * Treat an entity with medicine.
+     *
+     * @param entity Entity to treat
+     * @param treatMultiplier Treat chance multiplier
+     * @return Was the medicine used? This will only return false if there is nothing to treat.
+     */
+    public static TreatResult treat(EntityLivingBase entity, float treatMultiplier)
+    {
         List<PotionEffect> potionEffects = new ArrayList<PotionEffect>();
-        potionEffects.addAll(player.getActivePotionEffects());
+        potionEffects.addAll(entity.getActivePotionEffects());
 
         Collections.shuffle(potionEffects, ThreadLocalRandom.current());
 
@@ -43,23 +69,48 @@ public class ItemMedicalPack extends ItemBase
 
             if (potion instanceof ITreatableWithMedicine) {
                 // Treat this effect.
-                float treatChance = ((ITreatableWithMedicine) potion).getTreatChance();
+                float treatChance = ((ITreatableWithMedicine) potion).getTreatChance() * treatMultiplier;
                 if (ThreadLocalRandom.current().nextFloat() < treatChance) {
                     // Successful treatment
-                    player.sendMessage(new TextComponentTranslation("item.medical_pack.treat.success", potion.getName()));
-                    player.removePotionEffect(potion);
+                    entity.removePotionEffect(potion);
+                    return new TreatResult(true, true, potion);
                 } else {
                     // Failed treatment
-                    player.sendMessage(new TextComponentTranslation("item.medical_pack.treat.failure", potion.getName()));
+                    return new TreatResult(false, true, potion);
                 }
-
-                // Consume medicine
-                itemStack.shrink(1);
-
-                return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, itemStack);
             }
         }
 
-        return new ActionResult<ItemStack>(EnumActionResult.FAIL, itemStack);
+        return new TreatResult(false, false, null);
+    }
+
+    /**
+     * Result of a treatment attempt.
+     */
+    public static class TreatResult
+    {
+        /**
+         * Was a treatable effect removed by the medicine?
+         */
+        public boolean treatmentSuccessful;
+
+        /**
+         * Was the medicine used to <em>try</em> and treat an effect? True even if the treatment failed.
+         * Only false if there was nothing to treat.
+         */
+        public boolean wasTreatmentAttempted;
+
+        /**
+         * The effect that was attempted to be treated (if any).
+         */
+        @Nullable
+        public Potion effect = null;
+
+        public TreatResult(boolean treatmentSuccessful, boolean wasTreatmentAttempted, Potion effect)
+        {
+            this.treatmentSuccessful = treatmentSuccessful;
+            this.wasTreatmentAttempted = wasTreatmentAttempted;
+            this.effect = effect;
+        }
     }
 }
