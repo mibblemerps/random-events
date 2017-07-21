@@ -46,6 +46,14 @@ public class RandomEvent
     }
 
     /**
+     * Get config category name for this event.
+     */
+    public String getConfigName()
+    {
+        return "event_" + name;
+    }
+
+    /**
      * Get component on this randomevent.
      * If the component doesn't exist, returns null.
      *

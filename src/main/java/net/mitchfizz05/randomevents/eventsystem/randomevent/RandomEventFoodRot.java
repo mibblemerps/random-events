@@ -35,7 +35,7 @@ public class RandomEventFoodRot extends RandomEvent
     {
         super("food_rot");
 
-        rotChance = RandomEvents.config.get(getName(), "rot_chance", rotChance, "Chance of a stack of food in an inventory rotting. 0-1", 0, 0).getDouble();
+        rotChance = RandomEvents.config.get(getConfigName(), "rot_chance", rotChance, "Chance of a stack of food in an inventory rotting. 0-1", 0, 0).getDouble();
 
         addComponent(new CPlayerTimer(this, TimeHelper.hrsToTicks(2), TimeHelper.hrsToTicks(3)));
         addComponent(new CPlayerEvent());

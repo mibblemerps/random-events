@@ -52,11 +52,11 @@ public class RandomEventBuildingFire extends RandomEvent
         targetBlocks.add(Blocks.CARPET);
 
         // Read config
-        minimumSize = RandomEvents.config.get(getName(), "minimum_vein_size", minimumSize,
+        minimumSize = RandomEvents.config.get(getConfigName(), "minimum_vein_size", minimumSize,
                 "Minimum size of the chunk of blocks to be considered for burning.\n" +
                 "This is to prevent a single wooden plank out in the open catching on fire and calling it a \"building fire\".").getInt();
 
-        maxTries = RandomEvents.config.get(getName(), "max_tries", maxTries,
+        maxTries = RandomEvents.config.get(getConfigName(), "max_tries", maxTries,
                 "Max number of times to analyse a found block and see if it is a significant chunk of blocks worth burning.").getInt();
     }
 

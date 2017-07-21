@@ -28,7 +28,8 @@ public class ConfigService
         // Loop through all events
         for (RandomEvent randomEvent : event.getRandomEventRegistry().randomEvents) {
             // Check if this event has been disabled in config
-            if (!config.get(randomEvent.getName(), "enabled", true).getBoolean()) {
+            if (!config.get(randomEvent.getConfigName(), "enabled", true,
+                    "Is it possible for this event trigger?").getBoolean()) {
                 // Event disabled
                 randomEvent.disable();
                 continue;
