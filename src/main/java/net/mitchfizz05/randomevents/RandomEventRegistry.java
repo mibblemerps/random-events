@@ -89,5 +89,6 @@ public class RandomEventRegistry
         register(new RandomEventPlague());
         register(new RandomEventMalaria());
         register(new RandomEventFoodRot());
+        register(new RandomEventBuildingFire());
     }
 }

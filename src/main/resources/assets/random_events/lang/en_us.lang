@@ -21,6 +21,7 @@ randomevent.super_storm.ending=The storm clouds appear to be passing...
 randomevent.plague=You've randomly contracted the plague
 randomevent.plague.infected=You've contracted the plague from %1$s
 randomevent.food_rot=Much of your food has rotted away
+randomevent.building_fire=A building fire has started
 
 # Medical Pack
 item.medical_pack.name=Medical Pack

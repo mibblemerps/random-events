@@ -3,15 +3,20 @@ package net.mitchfizz05.randomevents.util;
 import io.netty.util.internal.ThreadLocalRandom;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.Entity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.World;
+import net.mitchfizz05.randomevents.RandomEvents;
 import org.apache.commons.lang3.ArrayUtils;
 import org.lwjgl.util.Point;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -205,7 +210,7 @@ public class CoordinateHelper
         return getCoordinatesInside(start, end);
     }
 
-    private static BlockScanResult[] scanForBlocks(World world, Block block, BlockPos position, int radius, boolean immediateReturn)
+    private static BlockScanResult[] scanForBlocks(World world, ICheckBlock checkBlock, BlockPos position, int radius, boolean immediateReturn)
     {
         int startX = position.getX() - radius;
         int startY = position.getY() - radius;
@@ -221,9 +226,9 @@ public class CoordinateHelper
                 for (int z = startZ; z < endZ; z++) {
                     // Check block.
                     IBlockState blockState = world.getBlockState(new BlockPos(x, y, z));
-                    if (blockState.getBlock().getUnlocalizedName().equals(block.getUnlocalizedName())) {
+                    if (checkBlock.checkBlock(blockState)) {
                         // Block match!
-                        results.add(new BlockScanResult(block, blockState, new BlockPos(x, y, z)));
+                        results.add(new BlockScanResult(blockState.getBlock(), blockState, new BlockPos(x, y, z)));
 
                         if (immediateReturn)
                             return (BlockScanResult[]) results.toArray();
@@ -235,6 +240,18 @@ public class CoordinateHelper
         BlockScanResult[] resultArray = new BlockScanResult[results.size()];
         results.toArray(resultArray);
         return resultArray;
+    }
+
+    private static BlockScanResult[] scanForBlocks(World world, final List<Block> blocks, BlockPos position, int radius, boolean immediateReturn)
+    {
+        return scanForBlocks(world, new ICheckBlock()
+        {
+            @Override
+            public boolean checkBlock(IBlockState target)
+            {
+                return blocks.contains(target.getBlock());
+            }
+        }, position, radius, immediateReturn);
     }
 
     /**
@@ -249,7 +266,7 @@ public class CoordinateHelper
      */
     public static BlockScanResult scanForBlock(World world, Block block, BlockPos position, int size)
     {
-        return scanForBlocks(world, block, position, size, true)[0];
+        return scanForBlocks(world, Collections.singletonList(block), position, size, true)[0];
     }
 
     /**
@@ -264,7 +281,37 @@ public class CoordinateHelper
      */
     public static BlockScanResult[] scanForBlocks(World world, Block block, BlockPos position, int size)
     {
-        return scanForBlocks(world, block, position, size, false);
+        return scanForBlocks(world, Collections.singletonList(block), position, size, false);
+    }
+
+    /**
+     * Scan for several types of blocks within an area around the player.
+     * The scan is done in a cube, not sphere.
+     *
+     * @param world World
+     * @param blocks Blocks to scan for
+     * @param position Position of player to scan around.
+     * @param size Radius of area to scan.
+     * @return An array of matching blocks within the area.
+     */
+    public static BlockScanResult[] scanForBlocks(World world, List<Block> blocks, BlockPos position, int size)
+    {
+        return scanForBlocks(world, blocks, position, size, false);
+    }
+
+    /**
+     * Scan for several types of blocks within an area around the player.
+     * The scan is done in a cube, not sphere.
+     *
+     * @param world World
+     * @param blocks Blocks to scan for
+     * @param position Position of player to scan around.
+     * @param size Radius of area to scan.
+     * @return First matching block as a BlockScanResult.
+     */
+    public static BlockScanResult scanForBlock(World world, List<Block> blocks, BlockPos position, int size)
+    {
+        return scanForBlocks(world, blocks, position, size, true)[0];
     }
 
     /**
@@ -310,6 +357,55 @@ public class CoordinateHelper
     public static BlockPos cloneBlockPos(BlockPos pos)
     {
         return new BlockPos(pos.getX(), pos.getY(), pos.getZ());
+    }
+
+    /**
+     * Find the size of a vein.
+     *
+     * @param world World
+     * @param origin Origin position to scan vein. The block at this position will be the vein material.
+     * @param maxSize Maximum size to scan.
+     * @return Vein size. If hit the max, it'll return the max size.
+     */
+    public static int scanVein(World world, BlockPos origin, int maxSize)
+    {
+        IBlockState target = world.getBlockState(origin);
+
+        // Count so far of target block found
+        int count = 0;
+
+        // List of blocks already checked
+        List<BlockPos> checked = new ArrayList<BlockPos>();
+
+        // List of block positions to scan next
+        List<BlockPos> toCheck = new ArrayList<BlockPos>();
+        toCheck.add(origin);
+
+        while (toCheck.size() > 0) {
+            // Pop next position off top of queue
+            BlockPos pos = toCheck.get(0);
+            toCheck.remove(0);
+
+            checked.add(pos);
+
+            // todo: do a better comparison here
+            if (world.getBlockState(pos).getBlock() == target.getBlock()) {
+                count++;
+
+                // Check max size
+                if (count >= maxSize) {
+                    return count; // Reached max
+                }
+
+                // Add neighbouring blocks to queue
+                for (BlockPos neighbourPos : getAdjacentCoordinates(pos)) {
+                    if (!checked.contains(neighbourPos) && !toCheck.contains(neighbourPos))
+                        toCheck.add(neighbourPos);
+                }
+            }
+        }
+
+        return count;
     }
 
     ///
@@ -377,5 +473,12 @@ public class CoordinateHelper
         }
 
         public PickedPosition() {}
+    }
+
+    /**
+     * Generic interface for class to check if a block is appropriate.
+     */
+    public interface ICheckBlock {
+        boolean checkBlock(IBlockState blockState);
     }
 }
