@@ -30,7 +30,7 @@ public class RandomEventZombieSwarm extends RandomEvent implements MobSpawner.IM
 
         ((CDifficulty) getComponent(CDifficulty.class)).difficulty = EventDifficulty.VERY_BAD;
 
-        addComponent(new CWorldTimer(this, TimeHelper.hrsToTicks(1), TimeHelper.hrsToTicks(3)));
+        addComponent(new CWorldTimer(this, TimeHelper.hrsToSecs(1), TimeHelper.hrsToSecs(3)));
         addComponent(new CRandomPlayer());
         addComponent(new CPlayerEvent());
     }

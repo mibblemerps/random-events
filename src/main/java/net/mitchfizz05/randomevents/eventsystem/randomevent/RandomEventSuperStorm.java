@@ -34,7 +34,7 @@ public class RandomEventSuperStorm extends RandomEvent implements IEventTick
     {
         super("super_storm");
 
-        addComponent(new CWorldTimer(this, TimeHelper.hrsToTicks(1.5f), TimeHelper.hrsToTicks(2)));
+        addComponent(new CWorldTimer(this, TimeHelper.hrsToSecs(1.5), TimeHelper.hrsToSecs(2)));
         addComponent(new CLongTimedEvent());
     }
 

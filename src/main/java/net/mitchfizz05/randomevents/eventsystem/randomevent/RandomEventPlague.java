@@ -20,7 +20,7 @@ public class RandomEventPlague extends RandomEvent
     {
         super("plague");
 
-        addComponent(new CPlayerTimer(this, TimeHelper.hrsToTicks(2), TimeHelper.hrsToTicks(3)));
+        addComponent(new CPlayerTimer(this, TimeHelper.hrsToSecs(2), TimeHelper.hrsToSecs(3)));
         addComponent(new CPlayerEvent());
     }
 

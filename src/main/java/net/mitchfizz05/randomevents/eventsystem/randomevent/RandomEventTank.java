@@ -25,7 +25,7 @@ public class RandomEventTank extends RandomEvent implements MobSpawner.IMobSpawn
     {
         super("tank");
 
-        addComponent(new CPlayerTimer(this, TimeHelper.hrsToTicks(0.5f), TimeHelper.hrsToTicks(2)));
+        addComponent(new CPlayerTimer(this, TimeHelper.hrsToSecs(0.5), TimeHelper.hrsToSecs(2)));
         addComponent(new CPlayerEvent());
     }
 

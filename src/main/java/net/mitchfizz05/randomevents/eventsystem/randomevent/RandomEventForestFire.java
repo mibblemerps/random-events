@@ -25,7 +25,7 @@ public class RandomEventForestFire extends RandomEvent
     {
         super("forest_fire");
 
-        addComponent(new CWorldTimer(this, TimeHelper.hrsToTicks(1), TimeHelper.hrsToTicks(2)));
+        addComponent(new CWorldTimer(this, TimeHelper.hrsToSecs(1), TimeHelper.hrsToSecs(2)));
         addComponent(new CPlayerEvent());
         addComponent(new CRandomPlayer());
     }

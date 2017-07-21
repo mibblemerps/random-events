@@ -25,7 +25,7 @@ public class RandomEventFurnaceFire extends RandomEvent
     {
         super("furnace_fire");
 
-        addComponent(new CPlayerTimer(this, TimeHelper.hrsToTicks(0.5f), TimeHelper.hrsToTicks(2.5f)));
+        addComponent(new CPlayerTimer(this, TimeHelper.hrsToSecs(0.5), TimeHelper.hrsToSecs(2.5)));
         addComponent(new CPlayerEvent());
     }
 

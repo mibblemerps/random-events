@@ -19,7 +19,7 @@ public class RandomEventLightningStrike extends RandomEvent
     {
         super("lightning_strike");
 
-        addComponent(new CPlayerTimer(this, TimeHelper.hrsToTicks(1), TimeHelper.hrsToTicks(4)));
+        addComponent(new CPlayerTimer(this, TimeHelper.hrsToSecs(1), TimeHelper.hrsToSecs(4)));
         addComponent(new CPlayerEvent());
     }
 

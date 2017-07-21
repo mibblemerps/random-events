@@ -43,7 +43,7 @@ public class TimeHelper
      * @param seconds Seconds
      * @return Ticks
      */
-    public static int secsToTicks(float seconds)
+    public static int secsToTicks(double seconds)
     {
         return (int) Math.ceil(seconds * 20);
     }
@@ -54,7 +54,7 @@ public class TimeHelper
      * @param minutes Minutes
      * @return Ticks
      */
-    public static int minsToTicks(float minutes)
+    public static int minsToTicks(double minutes)
     {
         return secsToTicks(minutes * 60);
     }
@@ -65,8 +65,34 @@ public class TimeHelper
      * @param hours Hours
      * @return Ticks
      */
-    public static int hrsToTicks(float hours)
+    public static int hrsToTicks(double hours)
     {
         return minsToTicks(hours * 60);
+    }
+
+    /**
+     * Convert minutes to seconds.
+     *
+     * Will be rounded to the <b>nearest</b> second.
+     *
+     * @param minutes Minutes
+     * @return Seconds
+     */
+    public static int minsToSecs(double minutes)
+    {
+        return (int) Math.round(minutes * 60);
+    }
+
+    /**
+     * Convert hours to seconds.
+     *
+     * Will be rounded to the <b>nearest</b> second.
+     *
+     * @param hours Hours
+     * @return Seconds
+     */
+    public static int hrsToSecs(double hours)
+    {
+        return minsToSecs(hours * 60);
     }
 }

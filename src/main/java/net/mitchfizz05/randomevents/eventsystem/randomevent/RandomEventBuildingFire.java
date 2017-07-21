@@ -43,7 +43,7 @@ public class RandomEventBuildingFire extends RandomEvent
     {
         super("building_fire");
 
-        addComponent(new CPlayerTimer(this, TimeHelper.hrsToTicks(1), TimeHelper.hrsToTicks(2)));
+        addComponent(new CPlayerTimer(this, TimeHelper.hrsToSecs(1), TimeHelper.hrsToSecs(2)));
         addComponent(new CPlayerEvent());
 
         // Add target blocks

@@ -32,7 +32,7 @@ public class RandomEventSpawnerDrop extends RandomEvent implements MobSpawner.IM
 
         ((CDifficulty) getComponent(CDifficulty.class)).difficulty = EventDifficulty.VERY_BAD;
 
-        addComponent(new CPlayerTimer(this, TimeHelper.hrsToTicks(2), TimeHelper.hrsToTicks(3)));
+        addComponent(new CPlayerTimer(this, TimeHelper.hrsToSecs(2), TimeHelper.hrsToSecs(3)));
         addComponent(new CPlayerEvent());
     }
 

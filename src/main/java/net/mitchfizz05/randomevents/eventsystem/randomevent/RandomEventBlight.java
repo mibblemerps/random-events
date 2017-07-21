@@ -18,7 +18,7 @@ public class RandomEventBlight extends RandomEvent
     {
         super("blight");
 
-        addComponent(new CPlayerTimer(this, TimeHelper.hrsToTicks(1), TimeHelper.hrsToTicks(2)));
+        addComponent(new CPlayerTimer(this, TimeHelper.hrsToSecs(1), TimeHelper.hrsToSecs(2)));
         addComponent(new CPlayerEvent());
     }
 

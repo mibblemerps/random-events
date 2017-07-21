@@ -24,7 +24,7 @@ public class RandomEventPinkSheep extends RandomEvent implements MobSpawner.IMob
 
         ((CDifficulty) getComponent(CDifficulty.class)).difficulty = EventDifficulty.GOOD;
 
-        addComponent(new CPlayerTimer(this, TimeHelper.hrsToTicks(0.5f), TimeHelper.hrsToTicks(2)));
+        addComponent(new CPlayerTimer(this, TimeHelper.hrsToSecs(0.5), TimeHelper.hrsToSecs(2)));
         addComponent(new CPlayerEvent());
     }
 

@@ -78,8 +78,8 @@ public class CPlayerTimer implements IComponent, IUsesNBT, IUsesConfig
     public void readConfig(Configuration config)
     {
         this.minWaitTime = config.get(randomEvent.getConfigName(), "min_wait_time", minWaitTime,
-                "Minimum amount of time (in ticks) that must pass before this event will trigger").getInt();
+                "Minimum amount of time (in seconds) that must pass before this event will trigger").getInt();
         this.maxWaitTime = config.get(randomEvent.getConfigName(), "max_wait_time", maxWaitTime,
-                "Maximum amount of time (in ticks) that can pass until this event will trigger").getInt();
+                "Maximum amount of time (in seconds) that can pass until this event will trigger").getInt();
     }
 }

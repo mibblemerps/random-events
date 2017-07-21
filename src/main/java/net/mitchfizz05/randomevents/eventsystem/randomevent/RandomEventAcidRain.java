@@ -33,7 +33,7 @@ public class RandomEventAcidRain extends RandomEvent implements IEventTick
     {
         super("acid_rain");
 
-        addComponent(new CWorldTimer(this, TimeHelper.hrsToTicks(1), TimeHelper.hrsToTicks(2)));
+        addComponent(new CWorldTimer(this, TimeHelper.hrsToSecs(1), TimeHelper.hrsToSecs(2)));
         addComponent(new CLongTimedEvent());
     }
 
