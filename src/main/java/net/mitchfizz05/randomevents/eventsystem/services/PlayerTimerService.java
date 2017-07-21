@@ -19,6 +19,8 @@ import java.util.List;
  */
 public class PlayerTimerService
 {
+    private double multiplier = 1.0;
+
     public PlayerTimerService()
     {
         MinecraftForge.EVENT_BUS.register(this);
@@ -39,6 +41,9 @@ public class PlayerTimerService
         if (event.player.ticksExisted % 20 != 0)
             return;
 
+        // Update multiplier
+        multiplier = RandomEventServices.eventTimerMultiplierService.getMultiplier(event.player.getEntityWorld());
+
         // Get all applicable events
         List<RandomEvent> events = RandomEvents.randomEventRegistry.getWith(CPlayerTimer.class);
 
@@ -52,7 +57,7 @@ public class PlayerTimerService
             if (timer.targetTime == 0)
                 timer.reset();
 
-            timer.timeElapsed ++;
+            timer.timeElapsed = timer.timeElapsed + multiplier;
             RandomEventServices.nbtService.markDirty();
 
             if (timer.timeElapsed >= timer.targetTime) {

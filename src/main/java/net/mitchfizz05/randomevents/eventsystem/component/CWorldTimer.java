@@ -17,7 +17,11 @@ public class CWorldTimer implements IComponent, IUsesNBT, IUsesConfig
     public int minWaitTime;
     public int maxWaitTime;
 
-    public int timeElapsed;
+    /**
+     * Warning: this cannot be relied on for real seconds elapsed, as it is affected by a multiplier
+     * ({@link net.mitchfizz05.randomevents.eventsystem.services.EventTimerMultiplierService}).
+     */
+    public double timeElapsed;
     public int targetTime;
 
     public CWorldTimer(RandomEvent randomEvent, int minWaitTime, int maxWaitTime)
@@ -39,7 +43,7 @@ public class CWorldTimer implements IComponent, IUsesNBT, IUsesConfig
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound compound)
     {
-        compound.setInteger("time_elapsed", timeElapsed);
+        compound.setDouble("time_elapsed", timeElapsed);
         compound.setInteger("target_time", targetTime);
 
         return compound;
@@ -48,7 +52,7 @@ public class CWorldTimer implements IComponent, IUsesNBT, IUsesConfig
     @Override
     public void readFromNBT(NBTTagCompound compound)
     {
-        timeElapsed = compound.getInteger("time_elapsed");
+        timeElapsed = compound.getDouble("time_elapsed");
         targetTime = compound.getInteger("target_time");
     }
 

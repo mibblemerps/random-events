@@ -11,6 +11,7 @@ public class RandomEventServices
     public static AnnouncerService announcerService;
     public static ConfigService configService;
     public static LongEventService longEventService;
+    public static EventTimerMultiplierService eventTimerMultiplierService;
 
 
     // ---
@@ -24,5 +25,6 @@ public class RandomEventServices
         announcerService = new AnnouncerService();
         configService = new ConfigService(RandomEvents.config);
         longEventService = new LongEventService();
+        eventTimerMultiplierService = new EventTimerMultiplierService();
     }
 }

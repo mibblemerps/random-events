@@ -12,9 +12,11 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraft.world.World;
 import net.mitchfizz05.randomevents.eventsystem.ExecuteEventException;
 import net.mitchfizz05.randomevents.eventsystem.component.*;
 import net.mitchfizz05.randomevents.eventsystem.randomevent.RandomEvent;
+import net.mitchfizz05.randomevents.eventsystem.services.EventTimerMultiplierService;
 import net.mitchfizz05.randomevents.eventsystem.services.RandomEventServices;
 import net.mitchfizz05.randomevents.util.TimeHelper;
 
@@ -103,6 +105,8 @@ public class CommandRandomEvents implements ICommand
             commandForecast(server, sender, args);
         else if (subCommand.equals("list"))
             commandList(server, sender, args);
+        else if (subCommand.equals("multiplier"))
+            commandMultiplier(server, sender, args);
         else
             throw new WrongUsageException(getUsage(sender));
     }
@@ -310,5 +314,37 @@ public class CommandRandomEvents implements ICommand
         for (RandomEvent event : events) {
             sender.sendMessage(new TextComponentString(" - " + event.getName()));
         }
+    }
+
+    protected void commandMultiplier(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException
+    {
+        EventTimerMultiplierService service = RandomEventServices.eventTimerMultiplierService;
+        World world = server.getEntityWorld();
+
+        // Styles
+        Style keyStyle = new Style().setColor(TextFormatting.YELLOW);
+        Style valueStyle = new Style().setColor(TextFormatting.GRAY);
+
+        // Print information
+        ITextComponent msg = new TextComponentString("\n");
+        msg.appendSibling(new TextComponentString("Multiplier Info\n").setStyle(new Style().setBold(true).setColor(TextFormatting.DARK_AQUA)));
+
+        // Total multiplier
+        msg.appendSibling(new TextComponentString("Overall Multiplier: ").setStyle(keyStyle));
+        msg.appendSibling(new TextComponentString(Double.toString(service.getMultiplier(world)) + "\n").setStyle(valueStyle));
+
+        // Configured multiplier
+        msg.appendSibling(new TextComponentString("Configured Multiplier: ").setStyle(keyStyle));
+        msg.appendSibling(new TextComponentString(Double.toString(service.getConfiguredMultiplier()) + "\n").setStyle(valueStyle));
+
+        // Difficulty multiplier
+        msg.appendSibling(new TextComponentString("Difficulty Multiplier: ").setStyle(keyStyle));
+        msg.appendSibling(new TextComponentString(Double.toString(service.getDifficultyMultiplier(world)) + "\n").setStyle(valueStyle));
+
+        // World existed multiplier
+        msg.appendSibling(new TextComponentString("World Existed Multiplier: ").setStyle(keyStyle));
+        msg.appendSibling(new TextComponentString(Double.toString(service.getWorldExistedMultiplier(world)) + "\n").setStyle(valueStyle));
+
+        sender.sendMessage(msg);
     }
 }
