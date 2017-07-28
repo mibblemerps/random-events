@@ -236,8 +236,8 @@ public class CommandRandomEvents implements ICommand
 
         // Get custom player target is specified.
         if (targetPlayerName != null) {
-            senderEntity = server.getPlayerList().getPlayerByUsername(targetPlayerName);
-            if (senderEntity == null)
+            target = server.getPlayerList().getPlayerByUsername(targetPlayerName);
+            if (target == null)
                 throw new CommandException("Player " + targetPlayerName + " not found!");
         }
 
