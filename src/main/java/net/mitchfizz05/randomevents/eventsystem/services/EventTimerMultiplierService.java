@@ -54,6 +54,7 @@ public class EventTimerMultiplierService
      * @param world World
      * @return Multiplier
      */
+    // todo: make this not increase whilst no-one is online.
     public double getWorldExistedMultiplier(World world)
     {
         // Initial time where multiplier doesn't increment
@@ -62,6 +63,25 @@ public class EventTimerMultiplierService
         double multiplier = 1 + (double)(world.getTotalWorldTime() - noIncrementPeriod) / (double)TimeHelper.hrsToTicks(8);
 
         return Math.max(1.0, multiplier);
+    }
+
+    /**
+     * If no players are online, set the multiplier to 0 (effectively pausing events).
+     *
+     * @param world World
+     * @return
+     */
+    public double getPlayersOnlineMultiplier(World world)
+    {
+        try {
+            if (world.getMinecraftServer().getPlayerList().getCurrentPlayerCount() == 0) {
+                return 0;
+            } else {
+                return 1;
+            }
+        } catch (NullPointerException e) {
+            return 1;
+        }
     }
 
     /**
@@ -74,6 +94,7 @@ public class EventTimerMultiplierService
     {
         return getConfiguredMultiplier() *
                 getDifficultyMultiplier(world) *
-                getWorldExistedMultiplier(world);
+                getWorldExistedMultiplier(world) *
+                getPlayersOnlineMultiplier(world);
     }
 }
