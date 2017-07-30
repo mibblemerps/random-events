@@ -98,7 +98,7 @@ public class RandomEventBuildingFire extends RandomEvent
             throw new ExecuteEventException("Not enough suitable blocks were found", this);
 
         // Ignite
-        for (BlockPos pos : CoordinateHelper.getCoordinatesAround(target.position, 3)) {
+        for (BlockPos pos : CoordinateHelper.getCoordinatesAround(target.position, 2)) {
             if (world.isAirBlock(pos) && Blocks.FIRE.canPlaceBlockAt(world, pos)) {
                 world.setBlockState(pos, Blocks.FIRE.getDefaultState()); // set fire!
             }
