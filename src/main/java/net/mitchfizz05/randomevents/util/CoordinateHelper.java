@@ -230,8 +230,15 @@ public class CoordinateHelper
                         // Block match!
                         results.add(new BlockScanResult(blockState.getBlock(), blockState, new BlockPos(x, y, z)));
 
-                        if (immediateReturn)
-                            return (BlockScanResult[]) results.toArray();
+                        if (immediateReturn) {
+                            // If no results then return null
+                            if (results.size() == 0)
+                                return new BlockScanResult[0];
+
+                            BlockScanResult[] resultArray = new BlockScanResult[results.size()];
+                            results.toArray(resultArray);
+                            return resultArray;
+                        }
                     }
                 }
             }
@@ -266,7 +273,10 @@ public class CoordinateHelper
      */
     public static BlockScanResult scanForBlock(World world, Block block, BlockPos position, int size)
     {
-        return scanForBlocks(world, Collections.singletonList(block), position, size, true)[0];
+        BlockScanResult[] results = scanForBlocks(world, Collections.singletonList(block), position, size, true);
+        if (results.length == 0)
+            return null;
+        return results[0];
     }
 
     /**
@@ -311,7 +321,10 @@ public class CoordinateHelper
      */
     public static BlockScanResult scanForBlock(World world, List<Block> blocks, BlockPos position, int size)
     {
-        return scanForBlocks(world, blocks, position, size, true)[0];
+        BlockScanResult[] results = scanForBlocks(world, blocks, position, size, true);
+        if (results.length == 0)
+            return null;
+        return results[0];
     }
 
     /**
@@ -341,7 +354,10 @@ public class CoordinateHelper
      */
     public static BlockScanResult scanForBlock(World world, ICheckBlock blockCheck, BlockPos position, int size)
     {
-        return scanForBlocks(world, blockCheck, position, size, true)[0];
+        BlockScanResult[] results = scanForBlocks(world, blockCheck, position, size, true);
+        if (results.length == 0)
+            return null;
+        return results[0];
     }
 
     /**
