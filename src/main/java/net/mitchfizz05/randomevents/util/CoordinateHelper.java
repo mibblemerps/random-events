@@ -315,6 +315,36 @@ public class CoordinateHelper
     }
 
     /**
+     * Scan for several types of blocks within an area around the player.
+     * The scan is done in a cube, not sphere.
+     *
+     * @param world World
+     * @param blockCheck A block checker
+     * @param position Position of player to scan around.
+     * @param size Radius of area to scan.
+     * @return An array of matching blocks within the area.
+     */
+    public static BlockScanResult[] scanForBlocks(World world, ICheckBlock blockCheck, BlockPos position, int size)
+    {
+        return scanForBlocks(world, blockCheck, position, size, false);
+    }
+
+    /**
+     * Scan for several types of blocks within an area around the player.
+     * The scan is done in a cube, not sphere.
+     *
+     * @param world World
+     * @param blockCheck A block checker
+     * @param position Position of player to scan around.
+     * @param size Radius of area to scan.
+     * @return First matching block as a BlockScanResult.
+     */
+    public static BlockScanResult scanForBlock(World world, ICheckBlock blockCheck, BlockPos position, int size)
+    {
+        return scanForBlocks(world, blockCheck, position, size, true)[0];
+    }
+
+    /**
      * Get all coordinates directly adjacent to block position.
      *
      * @param pos Origin
