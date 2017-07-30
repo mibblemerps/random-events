@@ -28,7 +28,7 @@ public class RandomEventTameWolf extends RandomEvent implements MobSpawner.IMobS
 
         ((CDifficulty) getComponent(CDifficulty.class)).difficulty = EventDifficulty.GOOD;
 
-        addComponent(new CPlayerTimer(this, TimeHelper.minsToSecs(15), TimeHelper.hrsToSecs(3)));
+        addComponent(new CPlayerTimer(this, TimeHelper.hrsToSecs(1), TimeHelper.hrsToSecs(3)));
         addComponent(new CPlayerEvent());
     }
 
