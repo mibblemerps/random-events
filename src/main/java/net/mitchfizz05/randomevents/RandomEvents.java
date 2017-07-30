@@ -13,6 +13,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.mitchfizz05.randomevents.block.REBlocks;
 import net.mitchfizz05.randomevents.content.RELootTables;
 import net.mitchfizz05.randomevents.eventsystem.services.RandomEventServices;
 import net.mitchfizz05.randomevents.item.ModItems;
@@ -56,6 +57,8 @@ public class RandomEvents
      */
     private boolean worldLoaded = false;
 
+    public static WeatherHelper weatherHelper = new WeatherHelper();
+
     @SidedProxy(clientSide = "net.mitchfizz05.randomevents.proxy.ClientProxy", serverSide = "net.mitchfizz05.randomevents.proxy.CommonProxy")
     public static CommonProxy proxy;
 
@@ -86,6 +89,7 @@ public class RandomEvents
         RandomEventServices.init();
 
         // Register game content
+        REBlocks.register();
         REStatusEffects.register();
         lootTables = new RELootTables();
 
