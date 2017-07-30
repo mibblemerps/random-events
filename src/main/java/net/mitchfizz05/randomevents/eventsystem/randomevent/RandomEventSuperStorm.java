@@ -116,6 +116,10 @@ public class RandomEventSuperStorm extends RandomEvent implements IEventTick
         if (world.getWorldInfo().getWorldTotalTime() % 20 * 5 != 0) return; // Only strike players every 5 seconds
 
         for (EntityPlayerMP player : players) {
+            if (!world.canSeeSky(player.getPosition())) {
+                continue;
+            }
+
             if (ThreadLocalRandom.current().nextFloat() <= strikeChance) { // default: 0.15f
                 // Strike them >:D
                 EntityLightningBolt bolt = new EntityLightningBolt(world, 0d, 0d, 0d, false);
