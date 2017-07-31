@@ -1,27 +1,30 @@
 package net.mitchfizz05.randomevents.statuseffect;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.init.MobEffects;
+import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.mitchfizz05.randomevents.RandomEvents;
+
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Malaria health effect.
  *
  * TODO: add icon
  */
-public class PotionMalaria extends Potion implements ITreatableWithMedicine
+public class PotionMalaria extends PotionBase implements ITreatableWithMedicine
 {
     AttributeModifier slownessAttributeModifier = new AttributeModifier("malaria_slowness", -0.20D, 2);
 
     public PotionMalaria()
     {
-        super(false, 0xc8f442);
-        setRegistryName(RandomEvents.MOD_ID, "malaria");
-        setPotionName("effect.randomevents.malaria");
+        super("malaria", true, 0xc8f442, 0, 0);
     }
 
     @Override
@@ -75,4 +78,12 @@ public class PotionMalaria extends Potion implements ITreatableWithMedicine
     {
         return 0.75f;
     }
+
+    @Override
+    public List<ItemStack> getCurativeItems() {
+        // Disable default curing mechanics
+        return Collections.emptyList();
+    }
+
+
 }

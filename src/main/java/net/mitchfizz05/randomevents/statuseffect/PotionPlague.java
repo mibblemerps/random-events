@@ -19,7 +19,7 @@ import java.util.List;
 /**
  * Potion that will slowly reveal symptoms and eventually kill it's host, and worst of all, is highly contagious.
  */
-public class PotionPlague extends Potion implements ITreatableWithMedicine
+public class PotionPlague extends PotionBase implements ITreatableWithMedicine
 {
     /**
      * Base distance the potion can spread.
@@ -46,9 +46,7 @@ public class PotionPlague extends Potion implements ITreatableWithMedicine
 
     public PotionPlague()
     {
-        super(false, 0xc8f442);
-        setRegistryName(RandomEvents.MOD_ID, "plague");
-        setPotionName("effect.randomevents.plague");
+        super("plague", true, 0x010101,1, 0);
     }
 
     @Override
