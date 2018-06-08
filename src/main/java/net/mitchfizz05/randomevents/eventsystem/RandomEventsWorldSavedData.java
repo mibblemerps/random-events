@@ -1,7 +1,7 @@
 package net.mitchfizz05.randomevents.eventsystem;
 
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.world.WorldSavedData;
+import net.minecraft.world.storage.WorldSavedData;
 import net.mitchfizz05.randomevents.RandomEvents;
 import net.mitchfizz05.randomevents.eventsystem.component.IComponent;
 import net.mitchfizz05.randomevents.eventsystem.randomevent.RandomEvent;

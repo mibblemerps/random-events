@@ -140,7 +140,7 @@ public class PotionPlague extends PotionBase implements ITreatableWithMedicine
                 continue;;
 
             // Chance of infection is linear to distance away.
-            float distance = entity.getDistanceToEntity(canidate);
+            float distance = entity.getDistance(canidate);
             float chance = ((contagiousDistance - distance) / contagiousDistance) * chanceModifier;
 
             // Check if the entity is too far away. This can happen because we're infecting a circular radius but we use a box to get nearby entities.

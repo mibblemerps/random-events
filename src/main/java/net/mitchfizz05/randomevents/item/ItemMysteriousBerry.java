@@ -2,6 +2,7 @@ package net.mitchfizz05.randomevents.item;
 
 import io.netty.util.internal.ThreadLocalRandom;
 import net.minecraft.client.resources.I18n;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
@@ -48,9 +49,9 @@ public class ItemMysteriousBerry extends ItemFood
     }
 
     @Override
-    public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced)
+    public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn)
     {
-        super.addInformation(stack, playerIn, tooltip, advanced);
+        super.addInformation(stack, worldIn, tooltip, flagIn);
 
         tooltip.add(I18n.format("item.mysterious_berry.tooltip"));
         if (getDiscovered(stack)) {
@@ -63,8 +64,10 @@ public class ItemMysteriousBerry extends ItemFood
     }
 
     @Override
-    public void getSubItems(Item item, CreativeTabs tab, NonNullList<ItemStack> subItems)
+    public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> subItems)
     {
+        if (tab != getCreativeTab()) return;
+
         // Add each berry type as a sub item.
         for (BerryType type : berryTypeValues) {
             subItems.add(getBerryItemStack(type, true));

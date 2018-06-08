@@ -99,7 +99,7 @@ public class RandomEventToolBreak extends RandomEvent
     public Item.ToolMaterial getToolMaterial(Item item)
     {
         if (item instanceof ItemTool) {
-            return ((ItemTool)item).getToolMaterial();
+            return Item.ToolMaterial.valueOf(((ItemTool)item).getToolMaterialName());
         } else if (item instanceof ItemSword) {
             String materialName = ((ItemSword)item).getToolMaterialName();
             return Item.ToolMaterial.valueOf(materialName);
