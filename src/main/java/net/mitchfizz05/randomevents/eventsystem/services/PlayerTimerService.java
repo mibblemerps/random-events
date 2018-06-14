@@ -63,7 +63,7 @@ public class PlayerTimerService
             if (timer.timeElapsed >= timer.targetTime) {
                 // Time to execute
                 try {
-                    RandomEventServices.executeEventService.executeEvent(randomEvent, world, event.player);
+                    RandomEventServices.executeEventService.executeEvent(randomEvent, world, event.player, true);
                 } catch (ExecuteEventException e) {
                     e.printWarning();
                 }

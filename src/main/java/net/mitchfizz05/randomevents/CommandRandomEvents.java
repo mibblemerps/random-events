@@ -245,7 +245,6 @@ public class CommandRandomEvents implements ICommand
         RandomEvent event = getEventByName(eventName);
 
         try {
-            //event.execute(server.getEntityWorld(), target);
             RandomEventServices.executeEventService.executeEvent(event, server.getEntityWorld(), target);
         } catch (ExecuteEventException e) {
             throw new CommandException("Couldn't execute randomevent: " + e.getMessage());

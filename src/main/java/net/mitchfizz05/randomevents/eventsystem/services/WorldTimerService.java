@@ -56,7 +56,7 @@ public class WorldTimerService
             if (timer.timeElapsed >= timer.targetTime) {
                 // Time to execute
                 try {
-                    RandomEventServices.executeEventService.executeEvent(randomEvent, event.world, null);
+                    RandomEventServices.executeEventService.executeEvent(randomEvent, event.world, null, true);
                 } catch (ExecuteEventException e) {
                     e.printWarning();
                 }

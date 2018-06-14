@@ -8,6 +8,7 @@ import net.mitchfizz05.randomevents.eventsystem.IUsesNBT;
 import net.mitchfizz05.randomevents.eventsystem.randomevent.RandomEvent;
 import net.mitchfizz05.randomevents.eventsystem.services.RandomEventServices;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -38,6 +39,16 @@ public class CPlayerTimer implements IComponent, IUsesNBT, IUsesConfig
         }
 
         return playerTimers.get(uuid);
+    }
+
+    /**
+     * Get an unmodifiable map of player timers.
+     * For obtaining the timer for a specific player you should use getTimer instead as this will create a timer for
+     * the player if one doesn't exist.
+     */
+    public Map<UUID, CWorldTimer> getPlayerTimers()
+    {
+        return Collections.unmodifiableMap(playerTimers);
     }
 
     @Override
