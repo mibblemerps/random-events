@@ -72,9 +72,9 @@ public class LongEventService
             for (RandomEvent event : events) {
                 CLongTimedEvent cLongTimedEvent = (CLongTimedEvent) event.getComponent(CLongTimedEvent.class);
 
-                // Decrement time left
                 if (cLongTimedEvent.isActive()) {
-                    cLongTimedEvent.timeLeft--;
+                    cLongTimedEvent.timeLeft--; // Decrement time left
+                    cLongTimedEvent.timeElapsed++; // Increment time elapsed
                     RandomEventServices.nbtService.markDirty();
                 }
             }

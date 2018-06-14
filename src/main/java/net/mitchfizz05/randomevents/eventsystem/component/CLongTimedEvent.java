@@ -14,6 +14,11 @@ public class CLongTimedEvent extends CLongEvent implements IUsesNBT
      */
     public int timeLeft;
 
+    /**
+     * Seconds since the event begun.
+     */
+    public int timeElapsed;
+
     @Override
     public boolean isActive()
     {
@@ -24,6 +29,7 @@ public class CLongTimedEvent extends CLongEvent implements IUsesNBT
     public NBTTagCompound writeToNBT(NBTTagCompound nbt)
     {
         nbt.setInteger("time_left", timeLeft);
+        nbt.setInteger("time_elapsed", timeElapsed);
 
         return nbt;
     }
@@ -32,5 +38,6 @@ public class CLongTimedEvent extends CLongEvent implements IUsesNBT
     public void readFromNBT(NBTTagCompound nbt)
     {
         timeLeft = nbt.getInteger("time_left");
+        timeElapsed = nbt.getInteger("time_elapsed");
     }
 }

@@ -91,5 +91,6 @@ public class RandomEventRegistry
         register(new RandomEventFoodRot());
         register(new RandomEventBuildingFire());
         register(new RandomEventGhastInvasion());
+        //register(new RandomEventFog());
     }
 }

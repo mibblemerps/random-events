@@ -111,13 +111,14 @@ public class RandomEvent
     /**
      * Add new component to this randomevent.
      */
-    public void addComponent(IComponent component)
+    public IComponent addComponent(IComponent component)
     {
-        if (hasComponent(component.getClass())) {
-            // Already has component
-        }
+//        if (hasComponent(component.getClass())) {
+//            // Already has component
+//        }
 
         components.add(component);
+        return component;
     }
 
     /**
