@@ -24,6 +24,7 @@ randomevent.food_rot=Much of your food has rotted away
 randomevent.building_fire=A building fire has started
 randomevent.nether_invasion=A portal into another world has opened.
 randomevent.invisible_spiders=Spiders are around, but where..?
+randomevent.cargo_drop=A chest has landed nearby.
 
 # Medical Pack
 item.medical_pack.name=Medical Pack
