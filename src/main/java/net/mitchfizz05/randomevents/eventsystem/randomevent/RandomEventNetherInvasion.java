@@ -18,7 +18,9 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.registries.GameData;
 import net.mitchfizz05.randomevents.RandomEvents;
+import net.mitchfizz05.randomevents.eventsystem.EventDifficulty;
 import net.mitchfizz05.randomevents.eventsystem.ExecuteEventException;
+import net.mitchfizz05.randomevents.eventsystem.component.CDifficulty;
 import net.mitchfizz05.randomevents.eventsystem.component.CRandomPlayer;
 import net.mitchfizz05.randomevents.eventsystem.component.CWorldTimer;
 import net.mitchfizz05.randomevents.util.CoordinateHelper;
@@ -42,6 +44,8 @@ public class RandomEventNetherInvasion extends RandomEvent implements MobSpawner
     public RandomEventNetherInvasion()
     {
         super("nether_invasion");
+
+        ((CDifficulty) getComponent(CDifficulty.class)).difficulty = EventDifficulty.VERY_BAD;
 
         addComponent(new CWorldTimer(this, TimeHelper.hrsToSecs(1), TimeHelper.hrsToSecs(3)));
         addComponent(new CRandomPlayer());
