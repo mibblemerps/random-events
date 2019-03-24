@@ -92,5 +92,6 @@ public class RandomEventRegistry
         register(new RandomEventBuildingFire());
         register(new RandomEventGhastInvasion());
         //register(new RandomEventFog());
+        register(new RandomEventNetherInvasion());
     }
 }

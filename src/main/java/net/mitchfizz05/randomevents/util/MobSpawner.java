@@ -27,15 +27,19 @@ public class MobSpawner
     {
         int mobCount = ThreadLocalRandom.current().nextInt(parameters.minCount, parameters.maxCount + 1);
 
+        if (parameters.position == null) {
+            parameters.position = player.getPosition();
+        }
+
         ArrayList<Entity> spawnedEntities = new ArrayList<Entity>();
         for (int i = 0; i < mobCount; i++) {
-            spawnedEntities.add(doSpawn(mobSpawnEvent, parameters, world, player));
+            spawnedEntities.add(doSpawn(mobSpawnEvent, parameters, world, parameters.position, player));
         }
 
         return spawnedEntities;
     }
 
-    protected static Entity doSpawn(IMobSpawnEvent mobSpawnEvent, MobSpawnEventParameters parameters, World world, EntityPlayer player)
+    protected static Entity doSpawn(IMobSpawnEvent mobSpawnEvent, MobSpawnEventParameters parameters, World world, BlockPos pos, EntityPlayer player)
     {
         // Get a IChecksPickedCoordinates if it's there
         CoordinateHelper.IChecksPickedCoordinates checksPickedCoordinates = null;
@@ -43,7 +47,7 @@ public class MobSpawner
             checksPickedCoordinates = (CoordinateHelper.IChecksPickedCoordinates) mobSpawnEvent;
 
         // Pick position
-        BlockPos blockPos = CoordinateHelper.pickPositionAroundPerimeter(world, player.getPosition(), parameters.radius, checksPickedCoordinates);
+        BlockPos blockPos = CoordinateHelper.pickPositionAroundPerimeter(world, pos, parameters.radius, checksPickedCoordinates);
 
         // Spawn entity
         Entity entity = mobSpawnEvent.getEntity(world, player);
@@ -62,11 +66,24 @@ public class MobSpawner
         public int maxCount;
         public int radius;
 
+        /**
+         * If not specified, the player position will be used.
+         */
+        public BlockPos position = null;
+
         public MobSpawnEventParameters(int minCount, int maxCount, int radius)
         {
             this.minCount = minCount;
             this.maxCount = maxCount;
             this.radius = radius;
+        }
+
+        public MobSpawnEventParameters(int minCount, int maxCount, int radius, BlockPos position)
+        {
+            this.minCount = minCount;
+            this.maxCount = maxCount;
+            this.radius = radius;
+            this.position = position;
         }
     }
 

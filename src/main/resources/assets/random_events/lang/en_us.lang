@@ -22,6 +22,7 @@ randomevent.plague=You've randomly contracted the plague
 randomevent.plague.infected=You've contracted the plague from %1$s
 randomevent.food_rot=Much of your food has rotted away
 randomevent.building_fire=A building fire has started
+randomevent.nether_invasion=A portal into another world has opened.
 
 # Medical Pack
 item.medical_pack.name=Medical Pack
