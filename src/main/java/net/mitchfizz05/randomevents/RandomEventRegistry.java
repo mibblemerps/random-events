@@ -93,5 +93,6 @@ public class RandomEventRegistry
         register(new RandomEventGhastInvasion());
         //register(new RandomEventFog());
         register(new RandomEventNetherInvasion());
+        register(new RandomEventInvisibleSpiders());
     }
 }
