@@ -41,7 +41,7 @@ public class RandomEventSpawnerDrop extends RandomEvent implements MobSpawner.IM
     {
         super.execute(world, player);
 
-        if (world.getWorldTime() < 12575 || world.getWorldTime() > 23031) throw new ExecuteEventException("Not night", this);
+        if (world.getWorldTime() < 12575 || world.getWorldTime() > 23031) throw new ExecuteEventException("Not night", this, true);
 
         MobSpawner.execute(this, new MobSpawner.MobSpawnEventParameters(2, 4, 17), world, player);
     }
