@@ -8,8 +8,11 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.mitchfizz05.randomevents.RandomEvents;
+import net.mitchfizz05.randomevents.eventsystem.EventDifficulty;
 import net.mitchfizz05.randomevents.eventsystem.ExecuteEventException;
+import net.mitchfizz05.randomevents.eventsystem.component.*;
 import net.mitchfizz05.randomevents.util.CoordinateHelper;
+import net.mitchfizz05.randomevents.util.TimeHelper;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -22,6 +25,11 @@ public class RandomEventCargoDrop extends RandomEvent
     public RandomEventCargoDrop()
     {
         super("cargo_drop");
+
+        ((CDifficulty) getComponent(CDifficulty.class)).difficulty = EventDifficulty.VERY_GOOD;
+
+        addComponent(new CPlayerTimer(this, TimeHelper.hrsToSecs(0.75), TimeHelper.hrsToSecs(3)));
+        addComponent(new CPlayerEvent());
 
         // Load config
         cargoDropLootTable = RandomEvents.config.get(getConfigName(), "loot_table", cargoDropLootTable,
