@@ -11,7 +11,6 @@ import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.World;
 import net.mitchfizz05.randomevents.RandomEvents;
 import org.apache.commons.lang3.ArrayUtils;
-import org.lwjgl.util.Point;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
