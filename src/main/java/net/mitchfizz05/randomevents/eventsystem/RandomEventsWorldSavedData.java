@@ -33,6 +33,10 @@ public class RandomEventsWorldSavedData extends WorldSavedData
                     ((IUsesNBT) component).readFromNBT(getNbtTagForEvent(event, nbt));
                 }
             }
+
+            if (event instanceof IUsesNBT) {
+                ((IUsesNBT) event).readFromNBT(getNbtTagForEvent(event, nbt));
+            }
         }
     }
 
@@ -50,6 +54,10 @@ public class RandomEventsWorldSavedData extends WorldSavedData
                     // Write NBT data
                     ((IUsesNBT) component).writeToNBT(getNbtTagForEvent(event, nbt));
                 }
+            }
+
+            if (event instanceof IUsesNBT) {
+                ((IUsesNBT) event).writeToNBT(getNbtTagForEvent(event, nbt));
             }
         }
 

@@ -95,5 +95,6 @@ public class RandomEventRegistry
         register(new RandomEventNetherInvasion());
         register(new RandomEventInvisibleSpiders());
         register(new RandomEventCargoDrop());
+        register(new RandomEventAwoken());
     }
 }

@@ -9,6 +9,8 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.mitchfizz05.randomevents.RandomEvents;
 import net.mitchfizz05.randomevents.eventsystem.RandomEventsWorldSavedData;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -50,6 +52,43 @@ public class NbtService
 
         // Return the player's tag
         return playersNbt.getCompoundTag(uuid.toString());
+    }
+
+    public HashMap<UUID, NBTTagCompound> getPlayersNbtMap(NBTTagCompound nbt)
+    {
+        // Get/create players compound tag
+        if (!nbt.hasKey("players"))
+            nbt.setTag("players", new NBTTagCompound());
+        NBTTagCompound playersNbt = nbt.getCompoundTag("players");
+
+        HashMap<UUID, NBTTagCompound> nbtMap = new HashMap<>();
+
+        // Iterate over all tags
+        for (String playerUuidStr : playersNbt.getKeySet()) {
+            try {
+                UUID playerUuid = UUID.fromString(playerUuidStr);
+                nbtMap.put(playerUuid, playersNbt.getCompoundTag(playerUuidStr));
+            } catch (Exception e) {
+                // Failed to load this player's NBT data :v
+                RandomEvents.logger.error("Failed to load player NBT data for UUID " + playerUuidStr + "! " + e.getMessage());
+            }
+        }
+
+        return nbtMap;
+    }
+
+    public NBTTagCompound writePlayerNbtMap(NBTTagCompound nbt, HashMap<UUID, NBTTagCompound> nbtMap)
+    {
+        // Get/create players compound tag
+        if (!nbt.hasKey("players"))
+            nbt.setTag("players", new NBTTagCompound());
+        NBTTagCompound playersNbt = nbt.getCompoundTag("players");
+
+        for (Map.Entry<UUID, NBTTagCompound> playerNbt : nbtMap.entrySet()) {
+            playersNbt.setTag(playerNbt.getKey().toString(), playerNbt.getValue());
+        }
+
+        return nbt;
     }
 
     /**
