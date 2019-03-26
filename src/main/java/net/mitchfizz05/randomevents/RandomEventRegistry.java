@@ -96,5 +96,6 @@ public class RandomEventRegistry
         register(new RandomEventInvisibleSpiders());
         register(new RandomEventCargoDrop());
         register(new RandomEventAwoken());
+        register(new RandomEventTorchFire());
     }
 }

@@ -70,6 +70,11 @@ public class AnnouncerService
     @SubscribeEvent
     public void onRandomEventTrigger(RandomEventTriggerEvent event)
     {
+        if (!event.randomEvent.getEnableAnnouncement()) {
+            // Announcements disabled for this event
+            return;
+        }
+
         MinecraftServer server = event.world.getMinecraftServer();
 
         // Announce the event

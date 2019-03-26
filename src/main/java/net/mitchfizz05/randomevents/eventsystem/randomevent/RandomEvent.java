@@ -29,6 +29,8 @@ public class RandomEvent
      */
     private ArrayList<IComponent> components = new ArrayList<IComponent>();
 
+    private boolean enableAnnouncement = true;
+
     public RandomEvent(String name)
     {
         this.name = name;
@@ -51,6 +53,22 @@ public class RandomEvent
     public String getConfigName()
     {
         return "event_" + name;
+    }
+
+    /**
+     * @return Should an announcement be made when this event executes?
+     */
+    public boolean getEnableAnnouncement()
+    {
+        return enableAnnouncement;
+    }
+
+    /**
+     * Should an announcement be made when this event executes?
+     */
+    public void setEnableAnnouncement(boolean enableAnnouncement)
+    {
+        this.enableAnnouncement = enableAnnouncement;
     }
 
     /**
