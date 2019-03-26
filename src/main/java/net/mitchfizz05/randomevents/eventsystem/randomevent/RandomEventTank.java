@@ -44,7 +44,7 @@ public class RandomEventTank extends RandomEvent implements MobSpawner.IMobSpawn
         EntityZombie zombie = new EntityZombie(world);
         zombie.addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, Integer.MAX_VALUE, 2)); // Slowness III
         zombie.addPotionEffect(new PotionEffect(MobEffects.STRENGTH, Integer.MAX_VALUE, 6)); // Strength VII
-        zombie.addPotionEffect(new PotionEffect(MobEffects.ABSORPTION, Integer.MAX_VALUE, 5)); // Absorption VI (24 extra health)
+        zombie.addPotionEffect(new PotionEffect(MobEffects.ABSORPTION, Integer.MAX_VALUE, 9)); // Absorption 10 (40 extra health)
         zombie.addPotionEffect(new PotionEffect(MobEffects.FIRE_RESISTANCE, Integer.MAX_VALUE, 5)); // Fire Resistance VI
 
         zombie.setCustomNameTag("Tank Zombie");
