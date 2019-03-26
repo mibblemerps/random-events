@@ -27,7 +27,7 @@ import java.util.List;
  */
 public class RandomEventBlight extends RandomEvent
 {
-    private double cropDieChance = 0.93;
+    private double cropDieChance = 0.9;
     private double poisonPotatoDropChance = 0.2;
 
     public RandomEventBlight()
