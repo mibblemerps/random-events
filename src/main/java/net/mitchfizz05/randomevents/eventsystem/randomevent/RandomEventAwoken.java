@@ -10,6 +10,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.MobEffects;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
@@ -129,18 +130,20 @@ public class RandomEventAwoken extends RandomEvent implements MobSpawner.IMobSpa
     {
         float chance = baseChance;
 
+        BlockPos sleepPos = player.getPosition();
+
         // Increase based on current light level
-        float lightLevel = world.getLightBrightness(player.getBedLocation().add(0, 1, 0));
+        float lightLevel = world.getLightBrightness(sleepPos.add(0, 1, 0));
         lightLevel = (float) Math.log(lightLevel + 1);
         lightLevel = Math.max(lightLevel, 0.05f);
         chance /= (lightLevel * 16);
 
-        if (world.canSeeSky(player.getBedLocation().add(0, 1, 0))) {
+        if (world.canSeeSky(sleepPos.add(0, 1, 0))) {
             chance *= 1.8f;
         }
 
         if (skullsIncreaseChance) {
-            CoordinateHelper.BlockScanResult[] result = CoordinateHelper.scanForBlocks(world, Blocks.SKULL, player.getBedLocation(), 3);
+            CoordinateHelper.BlockScanResult[] result = CoordinateHelper.scanForBlocks(world, Blocks.SKULL, sleepPos, 3);
             chance *= 1 + (result.length * 0.85f);
         }
 
@@ -148,7 +151,7 @@ public class RandomEventAwoken extends RandomEvent implements MobSpawner.IMobSpa
         chance = Math.max(chance, minChanceBeforeGold);
 
         if (goldBlocksDecreaseChance) {
-            CoordinateHelper.BlockScanResult[] result = CoordinateHelper.scanForBlocks(world, Blocks.GOLD_BLOCK, player.getBedLocation(), 3);
+            CoordinateHelper.BlockScanResult[] result = CoordinateHelper.scanForBlocks(world, Blocks.GOLD_BLOCK, sleepPos, 3);
             chance /= 1 + (result.length * 1.25f);
         }
 
