@@ -17,6 +17,7 @@ import net.mitchfizz05.randomevents.block.REBlocks;
 import net.mitchfizz05.randomevents.content.RELootTables;
 import net.mitchfizz05.randomevents.eventsystem.services.RandomEventServices;
 import net.mitchfizz05.randomevents.item.ModItems;
+import net.mitchfizz05.randomevents.mechanics.RandomFoodPoisoning;
 import net.mitchfizz05.randomevents.proxy.CommonProxy;
 import net.mitchfizz05.randomevents.statuseffect.REStatusEffects;
 import net.mitchfizz05.randomevents.util.WorldHelper;
@@ -104,6 +105,8 @@ public class RandomEvents
     public void postInit(FMLPostInitializationEvent event)
     {
         proxy.postInit(event);
+
+        RandomFoodPoisoning.postInit(event);
     }
 
     @EventHandler
