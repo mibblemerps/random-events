@@ -129,7 +129,7 @@ public class RandomEventToolBreak extends RandomEvent
         if (material == Item.ToolMaterial.GOLD)
             return 0f;
         else {
-            return 0.9f / itemstack.getMaxDamage();
+            return 0.8f / itemstack.getMaxDamage();
         }
     }
 
