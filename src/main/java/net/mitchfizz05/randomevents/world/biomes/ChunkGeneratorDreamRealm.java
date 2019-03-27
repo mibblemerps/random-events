@@ -25,19 +25,7 @@ public class ChunkGeneratorDreamRealm implements IChunkGenerator
     @Override
     public Chunk generateChunk(int chunkX, int chunkZ)
     {
-        ChunkPrimer primer = new ChunkPrimer();
-
-        for (int x = 0; x < 16; ++x)
-        {
-            for (int z = 0; z < 16; ++z)
-            {
-                int absX = chunkX * 16 + x;
-                int absZ = chunkZ * 16 + z;
-                primer.setBlockState(x, 60, z, Blocks.BEDROCK.getDefaultState());
-            }
-        }
-
-        Chunk chunk = new Chunk(world, primer, chunkX, chunkZ);
+        Chunk chunk = new Chunk(world, chunkX, chunkZ);
 
         // Set biome
         //Biome[] abiome = this.world.getBiomeProvider().getBiomes(null, chunkX * 16, chunkZ * 16, 16, 16);

@@ -12,6 +12,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.mitchfizz05.randomevents.command.CommandRandomEvents;
 import net.mitchfizz05.randomevents.command.CommandRoomHelper;
 import net.mitchfizz05.randomevents.world.biomes.Biomes;
@@ -24,6 +25,7 @@ import net.mitchfizz05.randomevents.mechanics.RandomFoodPoisoning;
 import net.mitchfizz05.randomevents.proxy.CommonProxy;
 import net.mitchfizz05.randomevents.statuseffect.REStatusEffects;
 import net.mitchfizz05.randomevents.util.WorldHelper;
+import net.mitchfizz05.randomevents.world.structures.WorldGenDreamRealmStructures;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -80,6 +82,7 @@ public class RandomEvents
 
         Biomes.register();
         Dimensions.regsiter();
+        GameRegistry.registerWorldGenerator(new WorldGenDreamRealmStructures(), 0);
 
         proxy.preInit(event);
     }
