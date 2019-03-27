@@ -1,4 +1,4 @@
-package net.mitchfizz05.randomevents.biomes;
+package net.mitchfizz05.randomevents.world.biomes;
 
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.biome.Biome;

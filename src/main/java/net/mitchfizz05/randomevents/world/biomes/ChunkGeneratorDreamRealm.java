@@ -1,6 +1,5 @@
-package net.mitchfizz05.randomevents.biomes;
+package net.mitchfizz05.randomevents.world.biomes;
 
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;

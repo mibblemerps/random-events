@@ -1,12 +1,12 @@
-package net.mitchfizz05.randomevents.dimension.dreamrealm;
+package net.mitchfizz05.randomevents.world.dimension.dreamrealm;
 
 import net.minecraft.world.DimensionType;
 import net.minecraft.world.WorldProvider;
 import net.minecraft.world.biome.BiomeProviderSingle;
 import net.minecraft.world.gen.IChunkGenerator;
-import net.mitchfizz05.randomevents.biomes.Biomes;
-import net.mitchfizz05.randomevents.biomes.ChunkGeneratorDreamRealm;
-import net.mitchfizz05.randomevents.dimension.Dimensions;
+import net.mitchfizz05.randomevents.world.biomes.Biomes;
+import net.mitchfizz05.randomevents.world.biomes.ChunkGeneratorDreamRealm;
+import net.mitchfizz05.randomevents.world.dimension.Dimensions;
 
 public class DimensionDreamRealm extends WorldProvider
 {

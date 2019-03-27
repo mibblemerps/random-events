@@ -1,4 +1,4 @@
-package net.mitchfizz05.randomevents;
+package net.mitchfizz05.randomevents.command;
 
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommand;
@@ -13,6 +13,7 @@ import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
+import net.mitchfizz05.randomevents.RandomEvents;
 import net.mitchfizz05.randomevents.eventsystem.ExecuteEventException;
 import net.mitchfizz05.randomevents.eventsystem.component.*;
 import net.mitchfizz05.randomevents.eventsystem.randomevent.RandomEvent;

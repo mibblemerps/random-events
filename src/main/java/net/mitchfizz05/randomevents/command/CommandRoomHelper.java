@@ -1,4 +1,4 @@
-package net.mitchfizz05.randomevents;
+package net.mitchfizz05.randomevents.command;
 
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;

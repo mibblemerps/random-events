@@ -1,8 +1,8 @@
-package net.mitchfizz05.randomevents.dimension;
+package net.mitchfizz05.randomevents.world.dimension;
 
 import net.minecraft.world.DimensionType;
 import net.minecraftforge.common.DimensionManager;
-import net.mitchfizz05.randomevents.dimension.dreamrealm.DimensionDreamRealm;
+import net.mitchfizz05.randomevents.world.dimension.dreamrealm.DimensionDreamRealm;
 
 public class Dimensions
 {

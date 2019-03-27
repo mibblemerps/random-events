@@ -1,4 +1,4 @@
-package net.mitchfizz05.randomevents.biomes;
+package net.mitchfizz05.randomevents.world.biomes;
 
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.common.BiomeDictionary;
