@@ -9,6 +9,7 @@ import net.minecraft.util.Mirror;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
@@ -25,8 +26,8 @@ public class NightmareStructure
     private String id;
     private ResourceLocation resource;
     private PlacementSettings placementSettings;
-    private BlockPos spawnPos = BlockPos.ORIGIN;
-    private BlockPos endPos = new BlockPos(0, 0, 10);
+    private Vec3d spawnPos = Vec3d.ZERO;
+    private BlockPos endBedPos = new BlockPos(0, 0, 10);
 
     public NightmareStructure(String id)
     {
@@ -154,25 +155,25 @@ public class NightmareStructure
         return this;
     }
 
-    public BlockPos getSpawnPos()
+    public Vec3d getSpawnPos()
     {
         return spawnPos;
     }
 
-    public NightmareStructure setSpawnPos(BlockPos spawnPos)
+    public NightmareStructure setSpawnPos(Vec3d spawnPos)
     {
         this.spawnPos = spawnPos;
         return this;
     }
 
-    public BlockPos getEndPos()
+    public BlockPos getEndBedPos()
     {
-        return endPos;
+        return endBedPos;
     }
 
-    public NightmareStructure setEndPos(BlockPos endPos)
+    public NightmareStructure setEndBedPos(BlockPos endBedPos)
     {
-        this.endPos = endPos;
+        this.endBedPos = endBedPos;
         return this;
     }
 }

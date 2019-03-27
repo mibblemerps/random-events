@@ -1,17 +1,23 @@
 package net.mitchfizz05.randomevents.world.worldgen.nightmares;
 
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 
 public class NightmareStructures
 {
-    public static ArrayList<NightmareStructure> nightmareStructures = new ArrayList<>();
+    public static HashMap<String, NightmareStructure> nightmareStructures = new HashMap<>();
 
     static
     {
-        nightmareStructures.add(new NightmareStructure("hedge_maze")
-                .setSpawnPos(new BlockPos(15, 4, 15))
-                .setEndPos(new BlockPos(0, 4, 16)));
+        add(new NightmareStructure("hedge_maze")
+                .setSpawnPos(new Vec3d(14.5, 3, 14.5))
+                .setEndBedPos(new BlockPos(14, 3, 1)));
+    }
+
+    private static void add(NightmareStructure structure)
+    {
+        nightmareStructures.put(structure.getId(), structure);
     }
 }
