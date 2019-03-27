@@ -1,17 +1,24 @@
 package net.mitchfizz05.randomevents.world.worldgen.nightmares;
 
+import net.minecraft.block.BlockSign;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.tileentity.TileEntitySign;
 import net.minecraft.util.Mirror;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.Style;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraft.world.gen.structure.template.PlacementSettings;
 import net.minecraft.world.gen.structure.template.Template;
 import net.minecraft.world.gen.structure.template.TemplateManager;
 import net.mitchfizz05.randomevents.RandomEvents;
+
+import javax.annotation.Nullable;
 
 public class NightmareStructure
 {
@@ -35,7 +42,7 @@ public class NightmareStructure
                 .setRotation(Rotation.NONE);
     }
 
-    public void placeIntoWorld(WorldServer world, BlockPos pos)
+    public void placeIntoWorld(WorldServer world, @Nullable EntityPlayer player, BlockPos pos)
     {
         TemplateManager templateManager = world.getStructureTemplateManager();
 
@@ -47,7 +54,12 @@ public class NightmareStructure
             world.notifyBlockUpdate(pos, state, state, 3);
             template.addBlocksToWorld(world, pos, placementSettings);
 
-            forceLightingCheck(world, pos, template.getSize());
+            BlockPos size = template.getSize();
+            BlockPos end = pos.add(size.getX(), size.getY(), size.getZ());
+
+            updateSpecialSigns(world, player, pos, end);
+
+            forceLightingCheck(world, pos, end);
         }
         else
         {
@@ -55,15 +67,54 @@ public class NightmareStructure
         }
     }
 
-    public static void forceLightingCheck(World world, BlockPos pos, BlockPos size)
+    private void updateSpecialSigns(World world, @Nullable EntityPlayer player, BlockPos start, BlockPos end)
     {
-        BlockPos end = pos.add(size.getX(), size.getY(), size.getZ());
-
-        for (int x = pos.getX(); x < end.getX(); x += 16)
+        for (int x = start.getX(); x < end.getX(); x++)
         {
-            for (int y = pos.getY(); y < end.getX(); y += 16)
+            for (int y = start.getY(); y < end.getX(); y++)
             {
-                for (int z = pos.getZ(); z < end.getZ(); z += 16)
+                for (int z = start.getZ(); z < end.getZ(); z++)
+                {
+                    BlockPos targetPos = new BlockPos(x, y, z);
+                    IBlockState blockState = world.getBlockState(targetPos);
+
+                    if (blockState.getBlock() instanceof BlockSign)
+                    {
+                        TileEntitySign sign = (TileEntitySign) world.getTileEntity(targetPos);
+                        if (sign == null) continue;
+
+                        for (int line = 0; line < sign.signText.length; line++)
+                        {
+                            Style style = sign.signText[line].getStyle();
+                            String lineText = sign.signText[line].getUnformattedText();
+
+                            if (lineText.contains("[Forecast]"))
+                            {
+                                // Not yet supported, destroy sign
+                                world.setBlockToAir(targetPos);
+                                continue;
+                            }
+
+                            if (player != null)
+                            {
+                                lineText = lineText.replaceAll("\\[PlayerName\\]", player.getDisplayNameString());
+                            }
+
+                            sign.signText[line] = new TextComponentString(lineText).setStyle(style);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    public static void forceLightingCheck(World world, BlockPos start, BlockPos end)
+    {
+        for (int x = start.getX(); x < end.getX(); x += 16)
+        {
+            for (int y = start.getY(); y < end.getX(); y += 16)
+            {
+                for (int z = start.getZ(); z < end.getZ(); z += 16)
                 {
                     world.getChunkFromBlockCoords(new BlockPos(x, y, z)).checkLight();
                 }

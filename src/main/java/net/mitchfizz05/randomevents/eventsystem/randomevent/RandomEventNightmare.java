@@ -54,7 +54,7 @@ public class RandomEventNightmare extends RandomEvent implements IUsesNBT
         // Generate!
         RandomEvents.logger.info("Generating nightmare " + nightmareStructure.getId()
                 + " for " + player.getName() + " at " + pos.toString() + "...");
-        nightmareStructure.placeIntoWorld(dreamRealm, pos);
+        nightmareStructure.placeIntoWorld(dreamRealm, player, pos);
 
         RandomEvents.logger.info("Structure generated, teleporting player...");
 
