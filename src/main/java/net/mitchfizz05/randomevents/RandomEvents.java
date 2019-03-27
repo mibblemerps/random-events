@@ -13,8 +13,10 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.mitchfizz05.randomevents.biomes.Biomes;
 import net.mitchfizz05.randomevents.block.REBlocks;
 import net.mitchfizz05.randomevents.content.RELootTables;
+import net.mitchfizz05.randomevents.dimension.Dimensions;
 import net.mitchfizz05.randomevents.eventsystem.services.RandomEventServices;
 import net.mitchfizz05.randomevents.item.ModItems;
 import net.mitchfizz05.randomevents.mechanics.RandomFoodPoisoning;
@@ -74,6 +76,9 @@ public class RandomEvents
 
         // Initialise WorldHelper
         WorldHelper.init();
+
+        Biomes.register();
+        Dimensions.regsiter();
 
         proxy.preInit(event);
     }

@@ -18,6 +18,7 @@ import net.mitchfizz05.randomevents.eventsystem.component.*;
 import net.mitchfizz05.randomevents.eventsystem.randomevent.RandomEvent;
 import net.mitchfizz05.randomevents.eventsystem.services.EventTimerMultiplierService;
 import net.mitchfizz05.randomevents.eventsystem.services.RandomEventServices;
+import net.mitchfizz05.randomevents.util.SimpleTeleporter;
 import net.mitchfizz05.randomevents.util.TimeHelper;
 
 import javax.annotation.Nullable;
@@ -46,8 +47,9 @@ public class CommandRandomEvents implements ICommand
     {
         return "randomevents trigger <randomevent> [delay] [player]\n" +
                 "randomevents info <randomevent>\n" +
-                "randomevents forecast\n" +
-                "randomevents list";
+                "randomevents list\n" +
+                "randomevents multiplier\n" +
+                "randomevents tpx <dim>";
     }
 
     public List<String> getAliases()
@@ -107,6 +109,8 @@ public class CommandRandomEvents implements ICommand
             commandList(server, sender, args);
         else if (subCommand.equals("multiplier"))
             commandMultiplier(server, sender, args);
+        else if (subCommand.equals("tpx"))
+            commandTpx(server, sender, args);
         else
             throw new WrongUsageException(getUsage(sender));
     }
@@ -345,5 +349,26 @@ public class CommandRandomEvents implements ICommand
         msg.appendSibling(new TextComponentString(Double.toString(service.getWorldExistedMultiplier(world)) + "\n").setStyle(valueStyle));
 
         sender.sendMessage(msg);
+    }
+
+    protected void commandTpx(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException
+    {
+        if (args.length != 2) {
+            throw new WrongUsageException(getUsage(sender));
+        }
+
+        Entity entity = sender.getCommandSenderEntity();
+        if (entity == null) {
+            throw new WrongUsageException("Must be executed by an entity");
+        }
+
+        try {
+            int dim = Integer.parseInt(args[1]);
+
+            // Change dimension
+            entity.changeDimension(dim, new SimpleTeleporter(server.getWorld(dim)));
+        } catch (NumberFormatException e) {
+            throw new WrongUsageException(args[1] + " is not a valid dimension ID");
+        }
     }
 }
