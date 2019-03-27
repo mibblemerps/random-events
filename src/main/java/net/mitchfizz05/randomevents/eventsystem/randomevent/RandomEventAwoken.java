@@ -87,11 +87,23 @@ public class RandomEventAwoken extends RandomEvent implements MobSpawner.IMobSpa
 
         if (player.isPlayerFullyAsleep()) {
             if (ThreadLocalRandom.current().nextFloat() < calculateChance(player.world, player)) {
-                // Trigger event
-                try {
-                    RandomEventServices.executeEventService.executeEvent(this, player.world, player);
-                    return;
-                } catch (ExecuteEventException ignored) {}
+                if (ThreadLocalRandom.current().nextFloat() < 0.5f) {
+                    // Trigger awoken event
+                    try {
+                        RandomEventServices.executeEventService.executeEvent(this, player.world, player);
+                        return;
+                    } catch (ExecuteEventException ignored) {}
+                } else {
+                    // TODO: change where this is done. This is a really bad place :V
+                    try {
+                        RandomEvent nightmareEvent = RandomEvents.randomEventRegistry.get("nightmare");
+                        if (nightmareEvent != null && nightmareEvent.isEnabled()) {
+                            RandomEventServices.executeEventService.executeEvent(nightmareEvent, player.world, player);
+                        }
+                    } catch (ExecuteEventException ignored) {}
+                }
+
+
             }
 
             if (enableFixedSleepTime) {
