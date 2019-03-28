@@ -13,6 +13,7 @@ public class ModItems
 {
     public static ItemMedicalPack medicalPack;
     public static ItemMysteriousBerry mysteriousBerry;
+    public static ItemDreamSword dreamSword;
 
     public static void preInit()
     {
@@ -20,6 +21,7 @@ public class ModItems
 
         medicalPack = new ItemMedicalPack();
         mysteriousBerry = new ItemMysteriousBerry();
+        dreamSword = new ItemDreamSword();
     }
 
     public static void registerRenders()
@@ -29,6 +31,7 @@ public class ModItems
         // register renderers..
         registerRender(medicalPack);
         registerRender(mysteriousBerry);
+        registerRender(dreamSword);
     }
 
     public static void registerRender(Item item)
@@ -45,5 +48,6 @@ public class ModItems
     public void onRegisterItems(RegistryEvent.Register<Item> event){
         event.getRegistry().register(medicalPack);
         event.getRegistry().register(mysteriousBerry);
+        event.getRegistry().register(dreamSword);
     }
 }

@@ -12,7 +12,7 @@ public class NightmareStructures
     static
     {
         add(new NightmareStructure("hedge_maze")
-                .setSpawnPos(new Vec3d(14.5, 3, 14.5))
+                .setSpawnPos(new Vec3d(13.5, 4, 13.5))
                 .setEndBedPos(new BlockPos(14, 3, 1)));
     }
 

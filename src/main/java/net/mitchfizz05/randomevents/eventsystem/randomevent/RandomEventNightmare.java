@@ -1,30 +1,32 @@
 package net.mitchfizz05.randomevents.eventsystem.randomevent;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.math.Vec3i;
 import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
-import net.minecraft.world.DimensionType;
 import net.minecraft.world.GameType;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.player.PlayerSleepInBedEvent;
-import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.PlayerEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.mitchfizz05.randomevents.RandomEvents;
 import net.mitchfizz05.randomevents.eventsystem.ExecuteEventException;
 import net.mitchfizz05.randomevents.eventsystem.IUsesNBT;
 import net.mitchfizz05.randomevents.eventsystem.services.RandomEventServices;
-import net.mitchfizz05.randomevents.util.SimpleTeleporter;
+import net.mitchfizz05.randomevents.item.ModItems;
 import net.mitchfizz05.randomevents.util.TeleportHelper;
 import net.mitchfizz05.randomevents.world.dimension.Dimensions;
 import net.mitchfizz05.randomevents.world.worldgen.nightmares.NightmareStructure;
 import net.mitchfizz05.randomevents.world.worldgen.nightmares.NightmareStructures;
+import scala.tools.nsc.interpreter.Naming;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -41,7 +43,7 @@ public class RandomEventNightmare extends RandomEvent implements IUsesNBT
     /**
      * Physical spacing between nightmare structures in the dream realm.
      */
-    private final int nightmareSpacing = 128;
+    private static final int nightmareSpacing = 128;
 
     public RandomEventNightmare()
     {
@@ -65,7 +67,7 @@ public class RandomEventNightmare extends RandomEvent implements IUsesNBT
 
         // Select location
         int currentIndex = nightmareIndex++;
-        BlockPos pos = new BlockPos(currentIndex * nightmareSpacing, 64, 0);
+        BlockPos pos = getNightmareStructureStartPos(currentIndex);
 
         // Generate!
         RandomEvents.logger.info("Generating nightmare " + nightmareStructure.getId()
@@ -79,11 +81,7 @@ public class RandomEventNightmare extends RandomEvent implements IUsesNBT
                 (float) player.posX, (float) player.posY, (float) player.posZ,
                 player.cameraYaw, player.cameraPitch, player.dimension));
 
-        // Teleport player
-        Vec3d relativeSpawnPos = nightmareStructure.getSpawnPos();
-        Vec3d spawnPos = relativeSpawnPos.add(new Vec3d(pos.getX(), pos.getY(), pos.getZ()));
-        TeleportHelper.teleport(player, (float) spawnPos.x, (float) spawnPos.y, (float) spawnPos.z,
-                0, 0, dreamRealm.provider.getDimension());
+        physicallyEnterNightmare(player);
 
         // We've updated NBT stuff so mark it dirty
         RandomEventServices.nbtService.markDirty();
@@ -106,9 +104,7 @@ public class RandomEventNightmare extends RandomEvent implements IUsesNBT
 
         sleepEvent.setResult(EntityPlayer.SleepResult.NOT_POSSIBLE_HERE);
 
-        BlockPos nightmareStartPos = new BlockPos(playerNightmareIndex * nightmareSpacing, 64, 0);
-        //BlockPos sleepRelativePos = sleepEvent.getPos().add(-nightmareStartPos.getX(), -nightmareStartPos.getY(), -nightmareStartPos.getZ());
-        //BlockPos sleepRelativePos = nightmareStartPos.subtract(new Vec3i(sleepEvent.getPos().getX(), sleepEvent.getPos().getY(), sleepEvent.getPos().getZ()));
+        BlockPos nightmareStartPos = getNightmareStructureStartPos(playerNightmareIndex);
         BlockPos sleepRelativePos = new BlockPos(
                 sleepEvent.getPos().getX() - nightmareStartPos.getX(),
                 sleepEvent.getPos().getY() - nightmareStartPos.getY(),
@@ -122,22 +118,88 @@ public class RandomEventNightmare extends RandomEvent implements IUsesNBT
         if (sleepRelativePos.equals(actualEndBedPos))
         {
             // Player escaped!
-            EscapePlayer(player);
+            escapePlayer(player);
         }
+    }
+
+    @SubscribeEvent
+    public void onPlayerTick(TickEvent.PlayerTickEvent tickEvent)
+    {
+        EntityPlayer player = tickEvent.player;
+
+        if (player.world.isRemote) return;
+
+        if (tickEvent.player.world.getTotalWorldTime() % 100 == 0)
+        {
+            destroyForbiddenItems(player);
+        }
+    }
+
+    @SubscribeEvent
+    public void onPlayerRespawn(PlayerEvent.PlayerRespawnEvent respawnEvent)
+    {
+        EntityPlayer player = respawnEvent.player;
+
+        if (player.world.isRemote) return;
+
+        if (!playerDataMap.containsKey(player.getUniqueID())) return;
+
+        physicallyEnterNightmare(player);
     }
 
     /**
      * Take player out of the nightmare state.
      */
-    public void EscapePlayer(EntityPlayer player)
+    public void escapePlayer(EntityPlayer player)
     {
         if (!playerDataMap.containsKey(player.getUniqueID())) return;
 
         PlayerData playerData = playerDataMap.remove(player.getUniqueID());
+        RandomEventServices.nbtService.markDirty();
+
+        destroyForbiddenItems(player);
 
         // Teleport player back to where they were before entering the nightmare
         TeleportHelper.teleport(player, playerData.lastX, playerData.lastY, playerData.lastZ,
                 playerData.lastYaw, playerData.lastPitch, playerData.lastDim);
+
+        player.setGameType(GameType.SURVIVAL);
+    }
+
+    private void physicallyEnterNightmare(EntityPlayer player)
+    {
+        PlayerData playerData = playerDataMap.get(player.getUniqueID());
+
+        BlockPos startPos = getNightmareStructureStartPos(playerData.nightmareIndex);
+        NightmareStructure nightmareStructure = NightmareStructures.nightmareStructures.get(playerData.nightmareType);
+
+        Vec3d relativeSpawnPos = nightmareStructure.getSpawnPos();
+        Vec3d spawnPos = relativeSpawnPos.add(new Vec3d(startPos.getX(), startPos.getY(), startPos.getZ()));
+
+        TeleportHelper.teleport(player, (float) spawnPos.x, (float) spawnPos.y, (float) spawnPos.z, 0, 0, Dimensions.DREAMREALM.getId());
+
+        // Adventure mode!
+        player.setGameType(GameType.ADVENTURE);
+
+        player.heal(20);
+
+        // Give sword
+        player.inventory.addItemStackToInventory(new ItemStack(ModItems.dreamSword, 1));
+    }
+
+    private void destroyForbiddenItems(EntityPlayer player)
+    {
+        if (playerDataMap.containsKey(player.getUniqueID())) return;
+
+        // Check for forbidden items outside of nightmares
+        for (ItemStack stack : player.inventory.mainInventory)
+        {
+            if (stack.getItem() instanceof IDreamItem)
+            {
+                // Destroy forbidden item
+                stack.setCount(0);
+            }
+        }
     }
 
     /**
@@ -212,6 +274,16 @@ public class RandomEventNightmare extends RandomEvent implements IUsesNBT
             playerDataMap.put(playerEntry.getKey(), data);
         }
     }
+
+    public static BlockPos getNightmareStructureStartPos(int nightmareIndex)
+    {
+        return new BlockPos(nightmareIndex * nightmareSpacing, 64, 0);
+    }
+
+    /**
+     * Any item that implements this will be destroyed when a player isn't having a nightmare
+     */
+    public interface IDreamItem {}
 
     private class PlayerData
     {

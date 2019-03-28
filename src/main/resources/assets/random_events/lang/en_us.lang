@@ -26,9 +26,14 @@ randomevent.nether_invasion=A portal into another world has opened.
 randomevent.invisible_spiders=Spiders are around, but where..?
 randomevent.cargo_drop=A chest has landed nearby.
 randomevent.awoken=Some creatures have awoken you from your slumber.
+randomevent.nightmare=You begin experiencing a freakishly real nightmare.
 
-# Medical Pack
+# Nightmares
+nightmare.hedge_maze.name=Hedge Maze
+
+# Misc Items
 item.medical_pack.name=Medical Pack
+item.dream_sword=Dreamrealm Sword
 
 # Medicine
 medicine.treat.success=Successfully treated %1$s!

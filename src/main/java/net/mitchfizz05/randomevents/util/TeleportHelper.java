@@ -9,11 +9,20 @@ public class TeleportHelper
     {
         if (entity.world.isRemote) return;
 
-        entity.changeDimension(dim, new SimpleTeleporter(entity.world.getMinecraftServer().getWorld(dim)));
+        if (entity.dimension != dim)
+        {
+            entity.changeDimension(dim, new SimpleTeleporter(entity.world.getMinecraftServer().getWorld(dim)));
+        }
 
         if (entity instanceof EntityPlayer)
         {
             EntityPlayer player = (EntityPlayer) entity;
+
+            if (player.isPlayerSleeping())
+            {
+                player.wakeUpPlayer(true, true, true);
+            }
+
             player.cameraYaw = yaw;
             player.cameraPitch = pitch;
         }
