@@ -21,7 +21,7 @@ public class RandomEventFurnaceMeltdown extends RandomEvent
     {
         super("furnace_meltdown");
 
-        addComponent(new CPlayerTimer(this, TimeHelper.hrsToSecs(0), TimeHelper.hrsToSecs(0.5)));
+        addComponent(new CPlayerTimer(this, TimeHelper.hrsToSecs(1.5f), TimeHelper.hrsToSecs(5f)));
         addComponent(new CPlayerEvent());
     }
 
