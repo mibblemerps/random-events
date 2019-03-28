@@ -79,7 +79,8 @@ public class RandomEventNightmare extends RandomEvent implements IUsesNBT
         // Save player nightmare data
         playerDataMap.put(player.getUniqueID(), new PlayerData(currentIndex, nightmareType,
                 (float) player.posX, (float) player.posY, (float) player.posZ,
-                player.cameraYaw, player.cameraPitch, player.dimension));
+                player.cameraYaw, player.cameraPitch, player.dimension,
+                player.getHealth(), player.getFoodStats().getFoodLevel(), player.getFoodStats().getSaturationLevel()));
 
         physicallyEnterNightmare(player);
 
@@ -163,6 +164,11 @@ public class RandomEventNightmare extends RandomEvent implements IUsesNBT
         TeleportHelper.teleport(player, playerData.lastX, playerData.lastY, playerData.lastZ,
                 playerData.lastYaw, playerData.lastPitch, playerData.lastDim);
 
+        // Reset player stats to what they were before entering nightmare
+        player.setHealth(playerData.lastHealth);
+        player.getFoodStats().setFoodLevel(playerData.lastHunger);
+        player.getFoodStats().setFoodSaturationLevel(playerData.lastSaturation);
+
         player.setGameType(GameType.SURVIVAL);
     }
 
@@ -181,7 +187,12 @@ public class RandomEventNightmare extends RandomEvent implements IUsesNBT
         // Adventure mode!
         player.setGameType(GameType.ADVENTURE);
 
+        // Heal player and give food
         player.heal(20);
+        player.getFoodStats().setFoodLevel(20);
+        player.getFoodStats().setFoodSaturationLevel(1f);
+
+        player.clearActivePotions();
 
         // Give sword
         player.inventory.addItemStackToInventory(new ItemStack(ModItems.dreamSword, 1));
@@ -239,6 +250,9 @@ public class RandomEventNightmare extends RandomEvent implements IUsesNBT
             playerNbt.setFloat("last_yaw", playerData.getValue().lastYaw);
             playerNbt.setFloat("last_pitch", playerData.getValue().lastPitch);
             playerNbt.setInteger("last_dim", playerData.getValue().lastDim);
+            playerNbt.setFloat("last_health", playerData.getValue().lastHealth);
+            playerNbt.setInteger("last_hunger", playerData.getValue().lastHunger);
+            playerNbt.setFloat("last_saturation", playerData.getValue().lastSaturation);
 
             playerNbtMap.put(playerData.getKey(), playerNbt);
         }
@@ -266,7 +280,10 @@ public class RandomEventNightmare extends RandomEvent implements IUsesNBT
                     playerNbt.getFloat("last_z"),
                     playerNbt.getFloat("last_yaw"),
                     playerNbt.getFloat("last_pitch"),
-                    playerNbt.getInteger("last_dim"));
+                    playerNbt.getInteger("last_dim"),
+                    playerNbt.getFloat("last_health"),
+                    playerNbt.getInteger("last_hunger"),
+                    playerNbt.getFloat("last_saturation"));
 
 
             if (data.nightmareIndex < 0) continue;
@@ -297,7 +314,14 @@ public class RandomEventNightmare extends RandomEvent implements IUsesNBT
         public float lastPitch;
         public int lastDim;
 
-        public PlayerData(int nightmareIndex, String nightmareType, float lastX, float lastY, float lastZ, float lastYaw, float lastPitch, int lastDim)
+        public float lastHealth;
+        public int lastHunger;
+        public float lastSaturation;
+
+        public PlayerData(int nightmareIndex, String nightmareType,
+                          float lastX, float lastY, float lastZ,
+                          float lastYaw, float lastPitch, int lastDim,
+                          float lastHealth, int lastHunger, float lastSaturation)
         {
             this.nightmareIndex = nightmareIndex;
             this.nightmareType = nightmareType;
@@ -307,6 +331,10 @@ public class RandomEventNightmare extends RandomEvent implements IUsesNBT
             this.lastYaw = lastYaw;
             this.lastPitch = lastPitch;
             this.lastDim = lastDim;
+            this.lastHealth = lastHealth;
+            this.lastHunger = lastHunger;
+            this.lastSaturation = lastSaturation;
         }
     }
 }
+
