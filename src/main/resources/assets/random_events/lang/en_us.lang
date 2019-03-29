@@ -33,7 +33,7 @@ nightmare.hedge_maze.name=Hedge Maze
 
 # Misc Items
 item.medical_pack.name=Medical Pack
-item.dream_sword=Dreamrealm Sword
+item.dream_sword.name=Dreamrealm Sword
 
 # Medicine
 medicine.treat.success=Successfully treated %1$s!
