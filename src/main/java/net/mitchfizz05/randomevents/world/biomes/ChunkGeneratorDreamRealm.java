@@ -27,6 +27,11 @@ public class ChunkGeneratorDreamRealm implements IChunkGenerator
     {
         Chunk chunk = new Chunk(world, chunkX, chunkZ);
 
+        if (chunkX == 0 && chunkZ == 0)
+        {
+            chunk.setBlockState(new BlockPos(0, 1, 0), Blocks.BEDROCK.getDefaultState());
+        }
+
         // Set biome
         //Biome[] abiome = this.world.getBiomeProvider().getBiomes(null, chunkX * 16, chunkZ * 16, 16, 16);
         byte[] biomeArray = chunk.getBiomeArray();
