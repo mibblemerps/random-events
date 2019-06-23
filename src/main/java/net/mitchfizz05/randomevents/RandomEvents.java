@@ -1,5 +1,6 @@
 package net.mitchfizz05.randomevents;
 
+import net.minecraft.init.Items;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.world.WorldEvent;
@@ -14,6 +15,7 @@ import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.mitchfizz05.randomevents.command.CommandRandomEvents;
 import net.mitchfizz05.randomevents.command.CommandRoomHelper;
+import net.mitchfizz05.randomevents.mechanics.CustomCompass;
 import net.mitchfizz05.randomevents.world.biomes.Biomes;
 import net.mitchfizz05.randomevents.block.REBlocks;
 import net.mitchfizz05.randomevents.content.RELootTables;
@@ -103,6 +105,8 @@ public class RandomEvents
         // Register events into registry
         randomEventRegistry.registerAllEvents();
         MinecraftForge.EVENT_BUS.post(new RandomEventsInitialised(randomEventRegistry));
+
+        CustomCompass.init(event);
 
         proxy.init(event);
     }
