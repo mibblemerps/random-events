@@ -1,8 +1,13 @@
 package net.mitchfizz05.randomevents.eventsystem.randomevent;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.MobEffects;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
+import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionEffect;
+import net.minecraft.potion.PotionType;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.Style;
@@ -77,10 +82,12 @@ public class RandomEventNightmare extends RandomEvent implements IUsesNBT
         RandomEvents.logger.info("Structure generated, teleporting player...");
 
         // Save player nightmare data
+        NBTTagList inventory = player.inventory.writeToNBT(new NBTTagList());
         playerDataMap.put(player.getUniqueID(), new PlayerData(currentIndex, nightmareType,
                 (float) player.posX, (float) player.posY, (float) player.posZ,
                 player.cameraYaw, player.cameraPitch, player.dimension,
-                player.getHealth(), player.getFoodStats().getFoodLevel(), player.getFoodStats().getSaturationLevel()));
+                player.getHealth(), player.getFoodStats().getFoodLevel(), player.getFoodStats().getSaturationLevel(),
+                inventory));
 
         physicallyEnterNightmare(player);
 
@@ -88,6 +95,8 @@ public class RandomEventNightmare extends RandomEvent implements IUsesNBT
         RandomEventServices.nbtService.markDirty();
 
         player.sendMessage(new TextComponentString(nightmareStructure.getLocalizedName()).setStyle(new Style().setColor(TextFormatting.RED)));
+
+        player.addPotionEffect(new PotionEffect(MobEffects.BLINDNESS, 20 * 6, 0, true, false));
     }
 
     @SubscribeEvent
@@ -169,6 +178,12 @@ public class RandomEventNightmare extends RandomEvent implements IUsesNBT
         player.getFoodStats().setFoodLevel(playerData.lastHunger);
         player.getFoodStats().setFoodSaturationLevel(playerData.lastSaturation);
 
+        // Reload inventory
+        player.inventory.readFromNBT(playerData.inventory);
+
+        // Clear potion effects
+        player.clearActivePotions();
+
         player.setGameType(GameType.SURVIVAL);
     }
 
@@ -186,6 +201,9 @@ public class RandomEventNightmare extends RandomEvent implements IUsesNBT
 
         // Adventure mode!
         player.setGameType(GameType.ADVENTURE);
+
+        // Clear inventory
+        player.inventory.clear();
 
         // Heal player and give food
         player.heal(20);
@@ -260,6 +278,7 @@ public class RandomEventNightmare extends RandomEvent implements IUsesNBT
             playerNbt.setFloat("last_health", playerData.getValue().lastHealth);
             playerNbt.setInteger("last_hunger", playerData.getValue().lastHunger);
             playerNbt.setFloat("last_saturation", playerData.getValue().lastSaturation);
+            playerNbt.setTag("inventory", playerData.getValue().inventory);
 
             playerNbtMap.put(playerData.getKey(), playerNbt);
         }
@@ -290,8 +309,8 @@ public class RandomEventNightmare extends RandomEvent implements IUsesNBT
                     playerNbt.getInteger("last_dim"),
                     playerNbt.getFloat("last_health"),
                     playerNbt.getInteger("last_hunger"),
-                    playerNbt.getFloat("last_saturation"));
-
+                    playerNbt.getFloat("last_saturation"),
+                    playerNbt.getTagList("inventory", 0));
 
             if (data.nightmareIndex < 0) continue;
 
@@ -325,10 +344,12 @@ public class RandomEventNightmare extends RandomEvent implements IUsesNBT
         public int lastHunger;
         public float lastSaturation;
 
+        public NBTTagList inventory;
+
         public PlayerData(int nightmareIndex, String nightmareType,
                           float lastX, float lastY, float lastZ,
                           float lastYaw, float lastPitch, int lastDim,
-                          float lastHealth, int lastHunger, float lastSaturation)
+                          float lastHealth, int lastHunger, float lastSaturation, NBTTagList inventory)
         {
             this.nightmareIndex = nightmareIndex;
             this.nightmareType = nightmareType;
@@ -341,6 +362,7 @@ public class RandomEventNightmare extends RandomEvent implements IUsesNBT
             this.lastHealth = lastHealth;
             this.lastHunger = lastHunger;
             this.lastSaturation = lastSaturation;
+            this.inventory = inventory;
         }
     }
 }

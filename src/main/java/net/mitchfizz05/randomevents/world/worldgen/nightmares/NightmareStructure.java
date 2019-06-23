@@ -58,6 +58,7 @@ public class NightmareStructure
             BlockPos size = template.getSize();
             BlockPos end = pos.add(size.getX(), size.getY(), size.getZ());
 
+            world.tick();
             updateSpecialSigns(world, player, pos, end);
 
             forceLightingCheck(world, pos, end);

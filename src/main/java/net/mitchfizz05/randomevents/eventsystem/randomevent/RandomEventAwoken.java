@@ -85,7 +85,7 @@ public class RandomEventAwoken extends RandomEvent implements MobSpawner.IMobSpa
 
         if (player.world.isRemote) return;
 
-        if (player.isPlayerFullyAsleep()) {
+        if (player.getSleepTimer() == 95) {
             if (ThreadLocalRandom.current().nextFloat() < calculateChance(player.world, player)) {
                 if (ThreadLocalRandom.current().nextFloat() < 0.5f) {
                     // Trigger awoken event
