@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "minecraft:wool",
+      "count": 1,
+      "data": 0
+    },
+    {
+      "type": "forge:ore_dict",
+      "ore": "mushroom"
+    },
+    {
+      "type": "forge:ore_dict",
+      "ore": "mushroom"
+    },
+    {
+      "type": "forge:ore_dict",
+      "ore": "mushroom"
+    }
+  ],
+  "result": {
+    "item": "random_events:medical_pack",
+    "count": 1
+  }
+}

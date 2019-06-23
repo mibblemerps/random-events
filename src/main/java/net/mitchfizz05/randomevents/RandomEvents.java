@@ -1,5 +1,6 @@
 package net.mitchfizz05.randomevents;
 
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
@@ -13,9 +14,11 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.oredict.OreDictionary;
 import net.mitchfizz05.randomevents.command.CommandRandomEvents;
 import net.mitchfizz05.randomevents.command.CommandRoomHelper;
 import net.mitchfizz05.randomevents.mechanics.CustomCompass;
+import net.mitchfizz05.randomevents.mechanics.UnlockMedicine;
 import net.mitchfizz05.randomevents.world.biomes.Biomes;
 import net.mitchfizz05.randomevents.block.REBlocks;
 import net.mitchfizz05.randomevents.content.RELootTables;
@@ -106,7 +109,12 @@ public class RandomEvents
         randomEventRegistry.registerAllEvents();
         MinecraftForge.EVENT_BUS.post(new RandomEventsInitialised(randomEventRegistry));
 
+        UnlockMedicine.init();
+
         CustomCompass.init(event);
+
+        OreDictionary.registerOre("mushroom", Blocks.BROWN_MUSHROOM);
+        OreDictionary.registerOre("mushroom", Blocks.RED_MUSHROOM);
 
         proxy.init(event);
     }
