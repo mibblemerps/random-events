@@ -3,6 +3,7 @@ package net.mitchfizz05.randomevents.statuseffect;
 import io.netty.util.internal.ThreadLocalRandom;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.MobEffects;
+import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -14,6 +15,7 @@ import net.mitchfizz05.randomevents.RandomEvents;
 import net.mitchfizz05.randomevents.content.REDamageSources;
 import net.mitchfizz05.randomevents.util.TimeHelper;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -172,5 +174,11 @@ public class PotionPlague extends PotionBase implements ITreatableWithMedicine
     public float getTreatChance()
     {
         return 0.9f;
+    }
+
+    @Override
+    public List<ItemStack> getCurativeItems() {
+        // Disable default curing mechanics
+        return Collections.emptyList();
     }
 }

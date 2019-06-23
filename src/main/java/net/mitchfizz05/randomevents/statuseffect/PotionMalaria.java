@@ -84,6 +84,4 @@ public class PotionMalaria extends PotionBase implements ITreatableWithMedicine
         // Disable default curing mechanics
         return Collections.emptyList();
     }
-
-
 }
