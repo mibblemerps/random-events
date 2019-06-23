@@ -207,6 +207,13 @@ public class RandomEventNightmare extends RandomEvent implements IUsesNBT
         {
             if (stack.getItem() instanceof IDreamItem)
             {
+                NBTTagCompound tag = stack.getTagCompound();
+                if (tag != null){
+                    if (tag.hasKey("Keep") && tag.getBoolean("Keep")) {
+                        continue; // Keep this item
+                    }
+                }
+
                 // Destroy forbidden item
                 stack.setCount(0);
             }
