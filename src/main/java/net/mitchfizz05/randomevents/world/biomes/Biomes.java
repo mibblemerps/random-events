@@ -22,7 +22,6 @@ public class Biomes
 
         BiomeDictionary.addTypes(biome, types);
         BiomeManager.addBiome(biomeType, new BiomeManager.BiomeEntry(biome, 10));
-        BiomeManager.addSpawnBiome(biome);
 
         RandomEvents.logger.info("Registered biome: " + biome.getBiomeName());
 
